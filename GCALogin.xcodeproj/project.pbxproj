@@ -8,10 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		A13519CBF793A0F93196F099 /* libPods-GCALogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */; };
+		B5375C2629A5787D00D37F5D /* AWSSigner in Frameworks */ = {isa = PBXBuildFile; productRef = B5375C2529A5787D00D37F5D /* AWSSigner */; };
+		B53E71E0299089B100BD6BCE /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */; };
 		B54565DB29884BAA00DB6F37 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54565DA29884BAA00DB6F37 /* MapViewController.swift */; };
+		B55F0C3B2990930200A871BD /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */; };
 		B56E37B6298749BD00126E90 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = B56E37B5298749BD00126E90 /* Auth0 */; };
 		B56E37B829874DB800126E90 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E37B729874DB800126E90 /* SearchViewController.swift */; };
 		B56E37BA29883EF200126E90 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B56E37B929883EF200126E90 /* Logo.png */; };
+		B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */; };
+		B5BD8E3B29A5AA6E00F359BB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */; };
 		D42890CF284C5CED006AFB73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890CE284C5CED006AFB73 /* AppDelegate.swift */; };
 		D42890D1284C5CED006AFB73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890D0284C5CED006AFB73 /* SceneDelegate.swift */; };
 		D42890D3284C5CED006AFB73 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890D2284C5CED006AFB73 /* ViewController.swift */; };
@@ -25,9 +30,13 @@
 
 /* Begin PBXFileReference section */
 		B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GCALogin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B54565DA29884BAA00DB6F37 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		B56E37B729874DB800126E90 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B56E37B929883EF200126E90 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		B9995C15440C251E96524041 /* Pods-GCALogin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GCALogin.debug.xcconfig"; path = "Target Support Files/Pods-GCALogin/Pods-GCALogin.debug.xcconfig"; sourceTree = "<group>"; };
 		D42890CB284C5CED006AFB73 /* GCALogin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCALogin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D42890CE284C5CED006AFB73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5375C2629A5787D00D37F5D /* AWSSigner in Frameworks */,
 				B56E37B6298749BD00126E90 /* Auth0 in Frameworks */,
 				A13519CBF793A0F93196F099 /* libPods-GCALogin.a in Frameworks */,
 			);
@@ -70,15 +80,18 @@
 				B9995C15440C251E96524041 /* Pods-GCALogin.debug.xcconfig */,
 				FFDB54B14FAD62494584FA74 /* Pods-GCALogin.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		D42890C2284C5CED006AFB73 = {
 			isa = PBXGroup;
 			children = (
+				B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */,
+				B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */,
+				B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */,
 				B54565DA29884BAA00DB6F37 /* MapViewController.swift */,
 				B56E37B729874DB800126E90 /* SearchViewController.swift */,
+				B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */,
 				B56E37B929883EF200126E90 /* Logo.png */,
 				D42890CD284C5CED006AFB73 /* CGALogin */,
 				D42890CC284C5CED006AFB73 /* Products */,
@@ -140,6 +153,7 @@
 			name = GCALogin;
 			packageProductDependencies = (
 				B56E37B5298749BD00126E90 /* Auth0 */,
+				B5375C2529A5787D00D37F5D /* AWSSigner */,
 			);
 			productName = "iOS UIKit Login";
 			productReference = D42890CB284C5CED006AFB73 /* GCALogin.app */;
@@ -170,7 +184,8 @@
 			);
 			mainGroup = D42890C2284C5CED006AFB73;
 			packageReferences = (
-				B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0.swift" */,
+				B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0" */,
+				B5375C2429A5787D00D37F5D /* XCRemoteSwiftPackageReference "aws-signer-v4" */,
 			);
 			productRefGroup = D42890CC284C5CED006AFB73 /* Products */;
 			projectDirPath = "";
@@ -243,7 +258,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B55F0C3B2990930200A871BD /* GooglePlacesManager.swift in Sources */,
 				B56E37B829874DB800126E90 /* SearchViewController.swift in Sources */,
+				B5BD8E3B29A5AA6E00F359BB /* FeedbackViewController.swift in Sources */,
+				B53E71E0299089B100BD6BCE /* SearchResultsViewController.swift in Sources */,
+				B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */,
 				D42890E5284C5F88006AFB73 /* UIImageView+Extensions.swift in Sources */,
 				D42890D3284C5CED006AFB73 /* ViewController.swift in Sources */,
 				D42890E3284C5F08006AFB73 /* User.swift in Sources */,
@@ -473,7 +492,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0.swift" */ = {
+		B5375C2429A5787D00D37F5D /* XCRemoteSwiftPackageReference "aws-signer-v4" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adam-fowler/aws-signer-v4";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Auth0.swift";
 			requirement = {
@@ -484,9 +511,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B5375C2529A5787D00D37F5D /* AWSSigner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5375C2429A5787D00D37F5D /* XCRemoteSwiftPackageReference "aws-signer-v4" */;
+			productName = AWSSigner;
+		};
 		B56E37B5298749BD00126E90 /* Auth0 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0.swift" */;
+			package = B56E37B4298749BD00126E90 /* XCRemoteSwiftPackageReference "Auth0" */;
 			productName = Auth0;
 		};
 /* End XCSwiftPackageProductDependency section */
