@@ -18,10 +18,10 @@ let frameWidth = UIScreen.main.bounds.width
 var svar: Int = 0;
 
 
-class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBarController
+
+class MapViewController: UIViewController, CLLocationManagerDelegate 
 {
     
-    @IBOutlet weak var Settings: UIButton!
     
     // ------------------------- START Hole Data Struct --------------------------------------
     // MARK: - Course
@@ -109,6 +109,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
             long = (course?.resources.first)!.flagcoords.long
             print((course?.resources.first)!.flagcoords.lat)
             print((course?.resources.first)!.flagcoords.long)
+            
         }
 
         task.resume()
@@ -130,11 +131,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
         super.viewDidLoad()
         createSettingsButton()
         createFeedbackButton()
-        createEmptyButton()
+       createEmptyButton()
+       // symbolButton()
         
      
        
     }
+    
+    
     @objc func SettingsbuttonAction(button: UIButton)
     {
         print("button Pressed")
@@ -157,11 +161,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
         //performSegue(withIdentifier: "FeedbackSegue", sender: self)
     }
     
+   
+    
     func createSettingsButton(){
         let button = UIButton(type: .system)
         button.frame = CGRect(x: 0, y: frameHeight-60, width: 120, height: 60)
         button.backgroundColor = .white
+        button.configuration = .plain()
         button.setTitle("Settings", for: .normal)
+      //  button.setAttributedTitle(attributedString, for: .normal)
+       // button.configuration?.image = UIImage(systemName: "figure.golf")
         button.layer.cornerRadius = 8
         button.contentEdgeInsets = UIEdgeInsets(
           top: 10,
@@ -169,10 +178,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
           bottom: 10,
           right: 20
           )
-    
+        let customButtonTitle = NSMutableAttributedString(string: "Settings", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15),
+            //NSAttributedString.Key.backgroundColor: UIColor.red,
+            NSAttributedString.Key.foregroundColor: UIColor.systemTeal
+        ])
+        button.configuration?.baseForegroundColor = .systemTeal
+        button.configuration?.image = UIImage(systemName: "house.circle")
+        button.setAttributedTitle(customButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(SettingsbuttonAction), for: .touchUpInside)
         self.view.addSubview(button)
-        
+       
        
     }
     
@@ -182,13 +198,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
         button.backgroundColor = .white
         button.setTitle("Hole 1", for: .normal)
         button.layer.cornerRadius = 8
+        button.configuration = .plain()
         button.contentEdgeInsets = UIEdgeInsets(
           top: 10,
           left: 20,
           bottom: 10,
           right: 20
           )
-    
+       
+        button.configuration?.image = UIImage(systemName: "figure.golf")
         button.addTarget(self, action: #selector(EmptybuttonAction), for: .touchUpInside)
         self.view.addSubview(button)
         
@@ -197,10 +215,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
     
     
     
+    
     func createFeedbackButton(){
         let button = UIButton(type: .system)
-        button.frame = CGRect(x: frameWidth-120, y: frameHeight-60, width: 120, height: 60)
+        button.frame = CGRect(x: frameWidth-120, y: frameHeight-60, width: 130, height: 60)
         button.backgroundColor = .white
+        button.configuration = .plain()
         button.setTitle("Feedback", for: .normal)
         button.layer.cornerRadius = 8
         button.contentEdgeInsets = UIEdgeInsets(
@@ -209,6 +229,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
           bottom: 10,
           right: 20
           )
+       
+        let customButtonTitle = NSMutableAttributedString(string: "Feedback", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15),
+            //NSAttributedString.Key.backgroundColor: UIColor.red,
+            NSAttributedString.Key.foregroundColor: UIColor.purple
+        ])
+        button.configuration?.baseForegroundColor = .purple
+        button.configuration?.image = UIImage(systemName: "quote.bubble")
+        button.setAttributedTitle(customButtonTitle, for: .normal)
     
         button.addTarget(self, action: #selector(FeedbackbuttonAction), for: .touchUpInside)
         self.view.addSubview(button)
@@ -227,14 +256,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate //,UITabBar
         }
     }
   
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        let destController = segue.destination as! SettingsViewController
-        //let newDestController = segue.destination as! FeedbackViewController
-        //destController.receiverStr = self.userNameLabel.text ?? ""
-    }
-    
-   */
+   
     
     
     
