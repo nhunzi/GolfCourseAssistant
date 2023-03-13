@@ -7,6 +7,9 @@
 
 import UIKit
 
+
+var myComments: [String] = ["Watch out for the water puddle on the green.", "Hit the ball over the trees from the tee. "]
+
 class SettingsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource{
     
     @IBOutlet var table: UITableView!
@@ -19,14 +22,31 @@ class SettingsViewController: UIViewController , UITableViewDelegate, UITableVie
         // Do any additional setup after loading the view.
     }
     
+    //Customize cell size
+     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if indexPath.section == 0 {
+            return 70 //height
+        } else {
+            return 50//width
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return myComments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Feedback"
+        
+        cell.textLabel?.text = myComments[indexPath.row]
+        cell.textLabel?.font = .systemFont(ofSize: 17)
+        cell.textLabel?.textAlignment = .left
+        cell.textLabel?.numberOfLines = 2
+        
+        
         return cell
     }
     

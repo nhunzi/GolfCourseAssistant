@@ -12,6 +12,7 @@
 
 import UIKit
 import Auth0
+import AWSSigner
 
 
 
@@ -27,6 +28,8 @@ class ViewController: UIViewController {
   @IBOutlet weak var userPicture: UIImageView!
   
     @IBOutlet weak var SegueLabel1: UIButton!
+    
+    var CourseName: String = ""
     
     // App and user status
     private var appJustLaunched = true
@@ -50,6 +53,31 @@ extension ViewController {
          userInfoStack.isHidden = true
          loginButton.isEnabled = true
          logoutButton.isEnabled = false
+      
+      // -------------------------------  START Fetching meta data -------------------------------
+      let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
+      let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
+      var signedURL = signer.signURL(
+          url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
+          method: .GET)
+      
+      var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
+      request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
+      
+      request.httpMethod = "GET"
+      
+      var task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+              print(String(describing: error))
+              return
+          }
+          //rint(String(data: data, encoding: .utf8)!)
+          let courseMetaResponse = try? JSONDecoder().decode(CourseMeta.self, from: data)
+          courseMeta = courseMetaResponse
+          print("!!!!!!!!!!!! course name: \((courseMeta?.name)!)")
+          self.CourseName = ("\((courseMeta?.name)!)")
+      }
+      task.resume()
   }
   
   
@@ -167,6 +195,8 @@ extension ViewController {
     {
         let destController = segue.destination as! SearchViewController
         destController.receiverStr = self.userNameLabel.text ?? ""
+        destController.nameString = self.CourseName
+        
     }
     
   func logout() {

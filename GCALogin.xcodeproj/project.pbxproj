@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037FFEEF29B1A9A300BE4128 /* CourseMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFEEE29B1A9A300BE4128 /* CourseMeta.swift */; };
+		037FFEF129B1ABC200BE4128 /* CourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFEF029B1ABC200BE4128 /* CourseData.swift */; };
+		0390D23A29B61FBF00DF9508 /* CourseScorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0390D23929B61FBF00DF9508 /* CourseScorecard.swift */; };
+		03E92D1C29BE1B4700B13C91 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 03E92D1B29BE1B4700B13C91 /* flag.png */; };
 		A13519CBF793A0F93196F099 /* libPods-GCALogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */; };
 		B5375C2629A5787D00D37F5D /* AWSSigner in Frameworks */ = {isa = PBXBuildFile; productRef = B5375C2529A5787D00D37F5D /* AWSSigner */; };
 		B53E71E0299089B100BD6BCE /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */; };
@@ -29,9 +33,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		037FFEEE29B1A9A300BE4128 /* CourseMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseMeta.swift; sourceTree = "<group>"; };
+		037FFEF029B1ABC200BE4128 /* CourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseData.swift; sourceTree = "<group>"; };
+		0390D23929B61FBF00DF9508 /* CourseScorecard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScorecard.swift; sourceTree = "<group>"; };
+		03E92D1B29BE1B4700B13C91 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GCALogin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
-		B54565DA29884BAA00DB6F37 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B54565DA29884BAA00DB6F37 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MapViewController.swift; sourceTree = "<group>"; };
 		B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		B56E37B729874DB800126E90 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B56E37B929883EF200126E90 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
@@ -86,6 +94,10 @@
 		D42890C2284C5CED006AFB73 = {
 			isa = PBXGroup;
 			children = (
+				03E92D1B29BE1B4700B13C91 /* flag.png */,
+				0390D23929B61FBF00DF9508 /* CourseScorecard.swift */,
+				037FFEF029B1ABC200BE4128 /* CourseData.swift */,
+				037FFEEE29B1A9A300BE4128 /* CourseMeta.swift */,
 				B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */,
 				B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */,
 				B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */,
@@ -206,6 +218,7 @@
 				B56E37BA29883EF200126E90 /* Logo.png in Resources */,
 				D42890E7284C607B006AFB73 /* Auth0.plist in Resources */,
 				D42890D6284C5CED006AFB73 /* Main.storyboard in Resources */,
+				03E92D1C29BE1B4700B13C91 /* flag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,11 +277,14 @@
 				B53E71E0299089B100BD6BCE /* SearchResultsViewController.swift in Sources */,
 				B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */,
 				D42890E5284C5F88006AFB73 /* UIImageView+Extensions.swift in Sources */,
+				037FFEF129B1ABC200BE4128 /* CourseData.swift in Sources */,
 				D42890D3284C5CED006AFB73 /* ViewController.swift in Sources */,
 				D42890E3284C5F08006AFB73 /* User.swift in Sources */,
+				0390D23A29B61FBF00DF9508 /* CourseScorecard.swift in Sources */,
 				D42890CF284C5CED006AFB73 /* AppDelegate.swift in Sources */,
 				D42890D1284C5CED006AFB73 /* SceneDelegate.swift in Sources */,
 				B54565DB29884BAA00DB6F37 /* MapViewController.swift in Sources */,
+				037FFEEF29B1A9A300BE4128 /* CourseMeta.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,9 +432,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62MH6V3HF5;
+				DEVELOPMENT_TEAM = YNKT4FK67W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -446,9 +463,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62MH6V3HF5;
+				DEVELOPMENT_TEAM = YNKT4FK67W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
