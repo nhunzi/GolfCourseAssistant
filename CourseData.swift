@@ -1,59 +1,36 @@
-//
-//  CourseData.swift
-//  GCALogin
-//
-//  Created by Nick Hunziker on 3/2/23.
-//
-// This file contains the structs for all the individual course data to be decoded from Golfbert API
-//
-
 import Foundation
 
-// MARK: - Course
-struct CourseData: Codable {
+// MARK: - Welcome5
+struct CourseData{
     let resources: [Resource]
 }
 
 // MARK: - Resource
-struct Resource: Codable {
+struct Resource{
     let id, number, courseid: Int
-    let rotation: Double
-    let range: Range
-    let dimensions: Dimensions
-    let vectors: [Vector]
-    let flagcoords: Flagcoords
+    let rotation: Double?
+    let range: Range?
+    let dimensions: Dimensions?
+    let vectors: [Any?]?
+    let flagcoords: Flagcoords?
 }
 
 // MARK: - Dimensions
-struct Dimensions: Codable {
+struct Dimensions{
     let width, height: Int
 }
 
 // MARK: - Flagcoords
-struct Flagcoords: Codable {
+struct Flagcoords{
     let lat, long: Double
 }
 
 // MARK: - Range
-struct Range: Codable {
+struct Range{
     let x, y: X
 }
 
 // MARK: - X
-struct X: Codable {
+struct X{
     let min, max: Double
-}
-
-// MARK: - Vector
-struct Vector: Codable {
-    let type: TypeEnum
-    let lat, long: Double
-}
-
-enum TypeEnum: String, Codable {
-    case blue = "Blue"
-    case flag = "Flag"
-    case red = "Red"
-    case white = "White"
-    case yellow = "Yellow"
 }

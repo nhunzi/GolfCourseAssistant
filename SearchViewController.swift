@@ -34,7 +34,12 @@ var bearingDegrees: Double = 0.0
 // testing CGRect for map boundaries
 var northEastCorner: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 var southWestCorner: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+
+// instances of structs
 var courseScorecard: CourseScorecard?
+var courseMeta: CourseMeta?
+var courseData: CourseData?
+
 var rectT: CGRect = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
 var courseName: String = ""
 
@@ -64,6 +69,7 @@ class SearchViewController : UIViewController, CLLocationManagerDelegate //, UIS
         
         // fetches data from Golfbert API and fills data structs
         fetchData()
+        
         
         title = "Golf Courses"
         //view.addSubview(mapView)
@@ -139,12 +145,15 @@ class SearchViewController : UIViewController, CLLocationManagerDelegate //, UIS
     }
 
 
+
+
+
 func fetchData(){
     // -------------------------------  START Fetching scorecard data -------------------------------
     let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
     let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
     var signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
+        url: URL(string:"https://api.golfbert.com/v1/courses/13028/holes")!,
         method: .GET)
     
     var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
@@ -157,88 +166,19 @@ func fetchData(){
             print(String(describing: error))
             return
         }
-        //rint(String(data: data, encoding: .utf8)!)
-        let courseMeta = try? JSONDecoder().decode(CourseMeta.self, from: data)
-        print("!!!!!!!!!!!! course name: \((courseMeta?.id)!))")
-    }
-    
-    
-    // -------------------------------  START Fetching scorecard data -------------------------------
-    signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13607/scorecard")!,
-        method: .GET)
-    request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
-    request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
-    
-    request.httpMethod = "GET"
-    
-    task = URLSession.shared.dataTask(with: request) { data, response, error in
-        guard let data = data else {
-            print(String(describing: error))
+        print(String(data: data, encoding: .utf8)!)
+        
+        guard let courseDataResponse = try? JSONDecoder().decode(CourseData.self, from: data) else {
+            print("Error decoding course meta data")
             return
         }
-        //rint(String(data: data, encoding: .utf8)!)
-        let courseScorecardResponse = try? JSONDecoder().decode(CourseScorecard.self, from: data)
-        courseScorecard = courseScorecardResponse
+        
+        print("hi")
+        print(courseDataResponse.resources[0].rotation)
+        courseData = courseDataResponse // assign the decoded courseMetaResponse to the global variable
     }
     task.resume()
-    // -------------------------------  END Fetching scorecard data -------------------------------
-
     
-    
-    
-    // -------------------------------  START Fetching real hole data -------------------------------
-    signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13607/holes")!,
-        method: .GET)
-    request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
-    request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
-    
-    request.httpMethod = "GET"
-    
-    task = URLSession.shared.dataTask(with: request) { data, response, error in
-        guard let data = data else {
-            print(String(describing: error))
-            return
-        }
-        let courseData = try? JSONDecoder().decode(CourseData.self, from: data)
-        
-        // various global various that are assigned for the first map instance to run
-        
-        // various global various that are assigned for the first map instance to run
-        
-        holeNum = (courseScorecard?.holeteeboxes[teeNum].holenumber)! - 1
-        // gets lat and long of specific hole
-        lat = (courseData?.resources[holeNum])!.flagcoords.lat
-        long = (courseData?.resources[holeNum])!.flagcoords.long
-        
-        // gets xmin, xmax, ymin, ymax
-        let xmin = (courseData?.resources[holeNum])!.range.x.min
-        let xmax = (courseData?.resources[holeNum])!.range.x.max
-        let ymin = (courseData?.resources[holeNum])!.range.y.min
-        let ymax = (courseData?.resources[holeNum])!.range.y.min
-        
-        rectT = CGRect(x: xmin, y: xmax, width: 960, height: 960)
-        
-        northEastCorner = CLLocationCoordinate2D(latitude: ymax,
-                                    longitude: xmax)
-        southWestCorner = CLLocationCoordinate2D(latitude: ymin,
-                                    longitude: xmin)
-        
-        // converts radian roation to degress rotation
-        bearingDegrees = rad2deg((courseData?.resources[holeNum])!.rotation)
-        
-        
-        
-        holePar = (courseScorecard?.holeteeboxes[teeNum].par)!
-        holeYards = (courseScorecard?.holeteeboxes[teeNum].length)!
-        
-        teeLat = (courseData?.resources[holeNum])!.vectors[2].lat
-        teeLong = (courseData?.resources[holeNum])!.vectors[2].long
-    }
-    
-    task.resume()
-    // -------------------------------  END Fetching real hole data -------------------------------
 }
 /*
 // MARK: - Navigation
