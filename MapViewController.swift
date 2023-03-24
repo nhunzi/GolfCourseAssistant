@@ -377,7 +377,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
         let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
         var signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
+            url: URL(string:"https://api.golfbert.com/v1/courses/13028")!,
             method: .GET)
         
         var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
@@ -401,7 +401,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         
         // -------------------------------  START Fetching actual data -------------------------------
         signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13607/holes")!,
+            url: URL(string:"https://api.golfbert.com/v1/courses/13028/holes")!,
             method: .GET)
         request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
         request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
