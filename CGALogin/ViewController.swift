@@ -15,7 +15,7 @@ import Auth0
 import AWSSigner
 
 
-
+var courseMeta: CourseMeta?
 class ViewController: UIViewController {
   
   // On-screen controls
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
   
     @IBOutlet weak var SegueLabel1: UIButton!
     
+
     var CourseName: String = ""
     
     // App and user status
@@ -48,9 +49,14 @@ extension ViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+<<<<<<< Updated upstream
       
      
       updateTitle()
+=======
+        
+        updateTitle()
+>>>>>>> Stashed changes
          userInfoStack.isHidden = true
          loginButton.isEnabled = true
          logoutButton.isEnabled = false

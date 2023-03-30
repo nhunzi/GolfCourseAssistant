@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import MapKit
-import AWSSigner
-import CoreLocation
 
+<<<<<<< Updated upstream
 
 
 // var for testing fetching for a specific hole. Hardcoded data for hole number
@@ -41,13 +39,14 @@ var courseName: String = ""
 
 
 class SearchViewController : UIViewController, CLLocationManagerDelegate //, UISearchResultsUpdating
+=======
+class SearchViewController : UIViewController
+>>>>>>> Stashed changes
 {
-   //Get user email address
+    //Get user email address
     @IBOutlet weak var userName: UILabel!
-
     //Get the name of the course
     @IBOutlet weak var CourseName: UILabel!
-    
     
     //Receive the user email through a segue
     var receiverStr: String = ""
@@ -58,13 +57,16 @@ class SearchViewController : UIViewController, CLLocationManagerDelegate //, UIS
     //let mapView =  MKMapView()
     //let searchVC = UISearchController(searchResultsController: SearchResultsViewController())
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< Updated upstream
         // fetches data from Golfbert API and fills data structs
         fetchData()
         
+=======
+>>>>>>> Stashed changes
         title = "Golf Courses"
         //view.addSubview(mapView)
         userName.text = "Hello " + receiverStr
@@ -73,39 +75,13 @@ class SearchViewController : UIViewController, CLLocationManagerDelegate //, UIS
         
     }
     
-    
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //mapView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.frame.size.width, height: view.frame.size.height - view.safeAreaInsets.top)
     }
-    
-    
-    
-    
-   /*func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text,
-              !query.trimmingCharacters(in: .whitespaces).isEmpty ,
-              let resultsVC = searchController.searchResultsController as? SearchResultsViewController
-        else{
-            return
-        }
-        resultsVC.delegate = self
-        
-        GooglePlacesManager.shared.findPlaces(query: query){ result in
-            switch result{
-            case .success(let places):
-                DispatchQueue.main.async {
-                    resultsVC.update(with: places)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-    }
-    */
+
 }
+<<<<<<< Updated upstream
     
     
      /*extension SearchViewController: SearchResultsViewControllerDelegate{
@@ -249,3 +225,5 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     // Pass the selected object to the new view controller.
 }
 */
+=======
+>>>>>>> Stashed changes
