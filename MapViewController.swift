@@ -69,7 +69,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             let coordinate2 = CLLocationCoordinate2D(latitude: userLat, longitude: userLong)
             
             yardsToPin = distanceInYards(from: coordinate1, to: coordinate2)
-            distanceToPinLabel()
+           createThreeLabels()
+           // distanceToPinLabel()
             //print("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
     }
     
@@ -122,10 +123,41 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
 
     func createSettingsButton(){
         let button = UIButton(type: .system)
+        button.frame = CGRect(x: frameWidth - 45, y: 90, width: 25, height: 25)
+       // button.backgroundColor = .white
+        button.configuration = .plain()
+        button.setTitle("", for: .normal)
+      //  button.setAttributedTitle(attributedString, for: .normal)
+       // button.configuration?.image = UIImage(systemName: "figure.golf")
+        button.layer.cornerRadius = 8
+        button.contentEdgeInsets = UIEdgeInsets(
+          top: 10,
+        left: 20,
+          bottom: 10,
+          right: 20
+          )
+        let customButtonTitle = NSMutableAttributedString(string: "", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+            //NSAttributedString.Key.backgroundColor: UIColor.white,
+            NSAttributedString.Key.foregroundColor: UIColor.white
+        ])
+        button.configuration?.baseForegroundColor = .white
+        button.configuration?.image = UIImage(systemName: "slider.horizontal.3")
+        button.setAttributedTitle(customButtonTitle, for: .normal)
+        
+        button.addTarget(self, action: #selector(SettingsbuttonAction), for: .touchUpInside)
+        self.view.addSubview(button)
+       
+       
+    }
+ 
+   
+    func createStatisticsButton(){
+        let button = UIButton(type: .system)
         button.frame = CGRect(x: 0, y: frameHeight-60, width: 120, height: 60)
         button.backgroundColor = .white
         button.configuration = .plain()
-        button.setTitle("Settings", for: .normal)
+        button.setTitle("Statistics", for: .normal)
       //  button.setAttributedTitle(attributedString, for: .normal)
        // button.configuration?.image = UIImage(systemName: "figure.golf")
         button.layer.cornerRadius = 8
@@ -135,20 +167,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
           bottom: 10,
           right: 20
           )
-        let customButtonTitle = NSMutableAttributedString(string: "Settings", attributes: [
+        let customButtonTitle = NSMutableAttributedString(string: "Statistics", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15),
             //NSAttributedString.Key.backgroundColor: UIColor.red,
             NSAttributedString.Key.foregroundColor: UIColor.systemTeal
         ])
         button.configuration?.baseForegroundColor = .systemTeal
-        button.configuration?.image = UIImage(systemName: "house.circle")
+        button.configuration?.image = UIImage(systemName: "equal")
         button.setAttributedTitle(customButtonTitle, for: .normal)
-        button.addTarget(self, action: #selector(SettingsbuttonAction), for: .touchUpInside)
+       // button.addTarget(self, action: #selector(SettingsbuttonAction), for: .touchUpInside)
         self.view.addSubview(button)
        
        
     }
     
+   
     func createNextAndPrevious(){
         let prevButton = UIButton(type: .system)
                 prevButton.setTitle("Previous", for: .normal)
@@ -236,6 +269,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         lbl3.text = "Yardage: \(holeYards)"
         lbl3.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(lbl3)
+        
+        
+        let lbl4 = UILabel()
+        lbl4.backgroundColor = .white
+        lbl4.font = UIFont.boldSystemFont(ofSize: 20)
+        lbl4.textColor = UIColor(red: 188/255, green: 143/255, blue: 143/255, alpha: 1.0)
+        lbl4.text = "\(yardsToPin) yards to pin"
+        lbl4.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(lbl4)
 
         NSLayoutConstraint.activate([
             // Set the top constraint of lbl1 to the top anchor of the safe area with 8 points of padding
@@ -251,28 +293,41 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             // Set the top constraint of lbl3 to the bottom anchor of lbl2 with 8 points of padding
             lbl3.topAnchor.constraint(equalTo: lbl2.bottomAnchor, constant: 8),
             // Set the leading constraint of lbl3 to the leading anchor of the safe area with 8 points of padding
-            lbl3.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8)
+            lbl3.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            
+            // Set the top constraint of lbl4 to the bottom anchor of lbl3 with 8 points of padding
+            lbl4.topAnchor.constraint(equalTo: lbl3.bottomAnchor, constant: 8),
+            // Set the leading constraint of lbl4 to the leading anchor of the safe area with 8 points of padding
+            lbl4.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8)
+             
         ])
     }
     
+    /*
     func distanceToPinLabel() {
         let lbl1 = UILabel()
         lbl1.backgroundColor = .white
+       // lbl1.frame = CGRect(x: frameWidth - 20 , y: frameHeight + 100 , width: 100, height: 50)
         lbl1.font = UIFont.boldSystemFont(ofSize: 20)
         lbl1.textColor = UIColor(red: 188/255, green: 143/255, blue: 143/255, alpha: 1.0)
         lbl1.text = "\(yardsToPin) yards to pin"
         lbl1.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(lbl1)
-
-
+        
+       
+      
         NSLayoutConstraint.activate([
             // Set the top constraint of lbl1 to the top anchor of the safe area with 8 points of padding
             lbl1.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8),
             // Set the trailing constraint of lbl1 to the trailing anchor of the safe area with 8 points of padding
             lbl1.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-        ])
-    }
 
+            //lbl1.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+        ])
+       
+    }
+     
+*/
     
     func createFeedbackButton(){
         let button = UIButton(type: .system)
@@ -377,7 +432,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
         let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
         var signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13028")!,
+            url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
             method: .GET)
         
         var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
@@ -401,7 +456,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         
         // -------------------------------  START Fetching actual data -------------------------------
         signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13028/holes")!,
+            url: URL(string:"https://api.golfbert.com/v1/courses/13607/holes")!,
             method: .GET)
         request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
         request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
@@ -429,8 +484,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         createSettingsButton()
         createFeedbackButton()
         createEmptyButton()
+        createStatisticsButton()
         createThreeLabels()
-        distanceToPinLabel()
+       // distanceToPinLabel()
     }
     
 }

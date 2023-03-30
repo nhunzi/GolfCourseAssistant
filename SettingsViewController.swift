@@ -8,20 +8,22 @@
 import UIKit
 
 
-var myComments: [String] = ["Watch out for the water puddle on the green.", "Hit the ball over the trees from the tee. "]
 
-class SettingsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource{
+class SettingsViewController: UIViewController {
     
-    @IBOutlet var table: UITableView!
+   @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue)
+    {
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        table.delegate = self
-        table.dataSource = self
+        //table.delegate = self
+        //table.dataSource = self
 
         // Do any additional setup after loading the view.
     }
-    
+    /*
     //Customize cell size
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
@@ -50,7 +52,7 @@ class SettingsViewController: UIViewController , UITableViewDelegate, UITableVie
         return cell
     }
     
-    
+    */
 
     /*
     // MARK: - Navigation

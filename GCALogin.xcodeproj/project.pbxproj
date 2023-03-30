@@ -21,6 +21,7 @@
 		B56E37BA29883EF200126E90 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B56E37B929883EF200126E90 /* Logo.png */; };
 		B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */; };
 		B5BD8E3B29A5AA6E00F359BB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */; };
+		B5F1FDEA29D3CE3B0084FBA5 /* GolfCourse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */; };
 		D42890CF284C5CED006AFB73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890CE284C5CED006AFB73 /* AppDelegate.swift */; };
 		D42890D1284C5CED006AFB73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890D0284C5CED006AFB73 /* SceneDelegate.swift */; };
 		D42890D3284C5CED006AFB73 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42890D2284C5CED006AFB73 /* ViewController.swift */; };
@@ -45,6 +46,8 @@
 		B56E37B929883EF200126E90 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		B5F1FDE529D36DFC0084FBA5 /* GCALogin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GCALogin-Bridging-Header.h"; sourceTree = "<group>"; };
+		B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GolfCourse.jpg; sourceTree = "<group>"; };
 		B9995C15440C251E96524041 /* Pods-GCALogin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GCALogin.debug.xcconfig"; path = "Target Support Files/Pods-GCALogin/Pods-GCALogin.debug.xcconfig"; sourceTree = "<group>"; };
 		D42890CB284C5CED006AFB73 /* GCALogin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCALogin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D42890CE284C5CED006AFB73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		D42890C2284C5CED006AFB73 = {
 			isa = PBXGroup;
 			children = (
+				B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */,
 				03E92D1B29BE1B4700B13C91 /* flag.png */,
 				0390D23929B61FBF00DF9508 /* CourseScorecard.swift */,
 				037FFEF029B1ABC200BE4128 /* CourseData.swift */,
@@ -109,6 +113,7 @@
 				D42890CC284C5CED006AFB73 /* Products */,
 				3625E87FA5222699E953A2E7 /* Pods */,
 				281BCA4E1E3CCBCC6DCA44D0 /* Frameworks */,
+				B5F1FDE529D36DFC0084FBA5 /* GCALogin-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,6 +188,7 @@
 				TargetAttributes = {
 					D42890CA284C5CED006AFB73 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -215,6 +221,7 @@
 			files = (
 				D42890DB284C5CEF006AFB73 /* LaunchScreen.storyboard in Resources */,
 				D42890D8284C5CEF006AFB73 /* Assets.xcassets in Resources */,
+				B5F1FDEA29D3CE3B0084FBA5 /* GolfCourse.jpg in Resources */,
 				B56E37BA29883EF200126E90 /* Logo.png in Resources */,
 				D42890E7284C607B006AFB73 /* Auth0.plist in Resources */,
 				D42890D6284C5CED006AFB73 /* Main.storyboard in Resources */,
@@ -430,9 +437,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YNKT4FK67W;
+				DEVELOPMENT_TEAM = 62MH6V3HF5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";
@@ -450,6 +458,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.golfcourseassistant.golfapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "GCALogin-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -461,9 +471,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YNKT4FK67W;
+				DEVELOPMENT_TEAM = 62MH6V3HF5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";
@@ -481,6 +492,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.golfcourseassistant.golfapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "GCALogin-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

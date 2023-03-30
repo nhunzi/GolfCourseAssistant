@@ -144,7 +144,7 @@ func fetchData(){
     let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
     let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
     var signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13028")!,
+        url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
         method: .GET)
     
     var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
@@ -165,7 +165,7 @@ func fetchData(){
     
     // -------------------------------  START Fetching scorecard data -------------------------------
     signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13028/scorecard")!,
+        url: URL(string:"https://api.golfbert.com/v1/courses/13607/scorecard")!,
         method: .GET)
     request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
     request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
@@ -189,7 +189,7 @@ func fetchData(){
     
     // -------------------------------  START Fetching real hole data -------------------------------
     signedURL = signer.signURL(
-        url: URL(string:"https://api.golfbert.com/v1/courses/13028/holes")!,
+        url: URL(string:"https://api.golfbert.com/v1/courses/13607/holes")!,
         method: .GET)
     request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
     request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
@@ -209,19 +209,19 @@ func fetchData(){
         
         holeNum = (courseScorecard?.holeteeboxes[teeNum].holenumber)! - 1
         // gets lat and long of specific hole
-        lat = (courseData?.resources[holeNum])!.flagcoords.lat
-        long = (courseData?.resources[holeNum])!.flagcoords.long
+         lat = (courseData?.resources[holeNum])!.flagcoords.lat
+          long = (courseData?.resources[holeNum])!.flagcoords.long
         
         // gets xmin, xmax, ymin, ymax
-        let xmin = (courseData?.resources[holeNum])!.range.x.min
+         let xmin = (courseData?.resources[holeNum])!.range.x.min
         let xmax = (courseData?.resources[holeNum])!.range.x.max
         let ymin = (courseData?.resources[holeNum])!.range.y.min
         let ymax = (courseData?.resources[holeNum])!.range.y.min
         
-        rectT = CGRect(x: xmin, y: xmax, width: 960, height: 960)
+          rectT = CGRect(x: xmin, y: xmax, width: 960, height: 960)
         
         northEastCorner = CLLocationCoordinate2D(latitude: ymax,
-                                    longitude: xmax)
+                                  longitude: xmax)
         southWestCorner = CLLocationCoordinate2D(latitude: ymin,
                                     longitude: xmin)
         
@@ -230,10 +230,10 @@ func fetchData(){
         
         
         
-        holePar = (courseScorecard?.holeteeboxes[teeNum].par)!
+         holePar = (courseScorecard?.holeteeboxes[teeNum].par)!
         holeYards = (courseScorecard?.holeteeboxes[teeNum].length)!
         
-        teeLat = (courseData?.resources[holeNum])!.vectors[2].lat
+         teeLat = (courseData?.resources[holeNum])!.vectors[2].lat
         teeLong = (courseData?.resources[holeNum])!.vectors[2].long
     }
     
