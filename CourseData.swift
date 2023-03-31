@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 //
 //  CourseData.swift
 //  GCALogin
@@ -11,7 +11,7 @@
 import Foundation
 
 // MARK: - Course
-=======
+
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
@@ -20,7 +20,7 @@ import Foundation
 import Foundation
 
 // MARK: - CourseData
->>>>>>> Stashed changes
+
 struct CourseData: Codable {
     let resources: [Resource]
 }
@@ -57,7 +57,7 @@ struct X: Codable {
 
 // MARK: - Vector
 struct Vector: Codable {
-<<<<<<< Updated upstream
+
     let type: TypeEnum
     let lat, long: Double
 }
@@ -69,8 +69,7 @@ enum TypeEnum: String, Codable {
     case white = "White"
     case yellow = "Yellow"
 }
-=======
-    let type: String
-    let lat, long: Double
-} 
->>>>>>> Stashed changes
+
+    //let type: String
+   // let lat, long: Double
+

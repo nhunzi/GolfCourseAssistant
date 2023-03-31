@@ -12,6 +12,8 @@
 		0390D23A29B61FBF00DF9508 /* CourseScorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0390D23929B61FBF00DF9508 /* CourseScorecard.swift */; };
 		03E92D1C29BE1B4700B13C91 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 03E92D1B29BE1B4700B13C91 /* flag.png */; };
 		A13519CBF793A0F93196F099 /* libPods-GCALogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */; };
+		B515886D29D60D9D006E112B /* playFlag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = B515886C29D60D9D006E112B /* playFlag0.gif */; };
+		B515886F29D60DA1006E112B /* playFlag1.png in Resources */ = {isa = PBXBuildFile; fileRef = B515886E29D60DA1006E112B /* playFlag1.png */; };
 		B5375C2629A5787D00D37F5D /* AWSSigner in Frameworks */ = {isa = PBXBuildFile; productRef = B5375C2529A5787D00D37F5D /* AWSSigner */; };
 		B53E71E0299089B100BD6BCE /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */; };
 		B54565DB29884BAA00DB6F37 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54565DA29884BAA00DB6F37 /* MapViewController.swift */; };
@@ -39,6 +41,8 @@
 		0390D23929B61FBF00DF9508 /* CourseScorecard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScorecard.swift; sourceTree = "<group>"; };
 		03E92D1B29BE1B4700B13C91 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		B12826CA8E2092B5C4F5D785 /* libPods-GCALogin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GCALogin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B515886C29D60D9D006E112B /* playFlag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = playFlag0.gif; sourceTree = "<group>"; };
+		B515886E29D60DA1006E112B /* playFlag1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playFlag1.png; sourceTree = "<group>"; };
 		B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B54565DA29884BAA00DB6F37 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MapViewController.swift; sourceTree = "<group>"; };
 		B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
@@ -94,11 +98,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B515887029D618CB006E112B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B56E37B929883EF200126E90 /* Logo.png */,
+				B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */,
+				B515886C29D60D9D006E112B /* playFlag0.gif */,
+				B515886E29D60DA1006E112B /* playFlag1.png */,
+				03E92D1B29BE1B4700B13C91 /* flag.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		D42890C2284C5CED006AFB73 = {
 			isa = PBXGroup;
 			children = (
-				B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */,
-				03E92D1B29BE1B4700B13C91 /* flag.png */,
+				B515887029D618CB006E112B /* Images */,
 				0390D23929B61FBF00DF9508 /* CourseScorecard.swift */,
 				037FFEF029B1ABC200BE4128 /* CourseData.swift */,
 				037FFEEE29B1A9A300BE4128 /* CourseMeta.swift */,
@@ -108,7 +123,6 @@
 				B54565DA29884BAA00DB6F37 /* MapViewController.swift */,
 				B56E37B729874DB800126E90 /* SearchViewController.swift */,
 				B53E71DF299089B100BD6BCE /* SearchResultsViewController.swift */,
-				B56E37B929883EF200126E90 /* Logo.png */,
 				D42890CD284C5CED006AFB73 /* CGALogin */,
 				D42890CC284C5CED006AFB73 /* Products */,
 				3625E87FA5222699E953A2E7 /* Pods */,
@@ -220,7 +234,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D42890DB284C5CEF006AFB73 /* LaunchScreen.storyboard in Resources */,
+				B515886D29D60D9D006E112B /* playFlag0.gif in Resources */,
 				D42890D8284C5CEF006AFB73 /* Assets.xcassets in Resources */,
+				B515886F29D60DA1006E112B /* playFlag1.png in Resources */,
 				B5F1FDEA29D3CE3B0084FBA5 /* GolfCourse.jpg in Resources */,
 				B56E37BA29883EF200126E90 /* Logo.png in Resources */,
 				D42890E7284C607B006AFB73 /* Auth0.plist in Resources */,

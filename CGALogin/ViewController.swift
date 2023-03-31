@@ -15,7 +15,7 @@ import Auth0
 import AWSSigner
 
 
-var courseMeta: CourseMeta?
+//var courseMeta: CourseMeta?
 class ViewController: UIViewController {
   
   // On-screen controls
@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var SegueLabel1: UIButton!
     
 
+    @IBOutlet weak var flagImage: UIImageView!
     var CourseName: String = ""
     
     // App and user status
@@ -49,14 +50,9 @@ extension ViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-<<<<<<< Updated upstream
-      
      
-      updateTitle()
-=======
-        
+      //updateTitle()
         updateTitle()
->>>>>>> Stashed changes
          userInfoStack.isHidden = true
          loginButton.isEnabled = true
          logoutButton.isEnabled = false
@@ -181,6 +177,9 @@ extension ViewController {
                   self.SegueLabel1.isHidden = false //MyCode
                   self.userEmailLabel.isHidden = true//MyCode
                   self.userNameLabel.isHidden = true//MyCode
+                  self.flagImage.isHidden = false //MyCode
+                  //self.SegueLabel1.titleLabel?.font = UIFont.systemFont(ofSize: 42, weight: .bold)
+                   
                   
                   
                                           

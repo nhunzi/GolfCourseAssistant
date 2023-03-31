@@ -94,21 +94,6 @@
                                     <constraint firstAttribute="bottom" secondItem="TN6-kt-dDZ" secondAttribute="bottom" id="nae-sF-27R"/>
                                 </constraints>
                             </stackView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-ZT-Xcy">
-                                <rect key="frame" x="10" y="738" width="373" height="50"/>
-                                <color key="backgroundColor" red="0.55561774969100952" green="0.91575527191162109" blue="0.82127630710601807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="yTJ-0w-Vxk"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Play">
-                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <segue destination="K1Y-SP-8UB" kind="show" id="S0g-SC-I0W"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="cFl-Dk-1bu">
                                 <rect key="frame" x="76.666666666666686" y="306" width="240" height="240"/>
                                 <constraints>
@@ -161,6 +146,24 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="playFlag1.png" translatesAutoresizingMaskIntoConstraints="NO" id="N8x-B8-s2Z">
+                                <rect key="frame" x="15" y="525" width="363" height="327"/>
+                            </imageView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-ZT-Xcy">
+                                <rect key="frame" x="87" y="554" width="123" height="71"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="N2M-nq-gdq"/>
+                                    <constraint firstAttribute="width" constant="123" id="pvY-EV-2vO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="45"/>
+                                <color key="tintColor" systemColor="systemBackgroundColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <segue destination="K1Y-SP-8UB" kind="show" id="S0g-SC-I0W"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -168,25 +171,29 @@
                             <constraint firstItem="ksL-eo-Sid" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1PQ-VG-mjQ"/>
                             <constraint firstItem="cFl-Dk-1bu" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9Wl-pi-Nnr"/>
                             <constraint firstItem="ksL-eo-Sid" firstAttribute="top" secondItem="8hJ-3w-e7t" secondAttribute="bottom" constant="20" id="AbB-lg-Zwp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Snd-ZT-Xcy" secondAttribute="trailing" constant="10" id="Azb-VA-vYD"/>
+                            <constraint firstItem="N8x-B8-s2Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="B2w-Dk-mzz"/>
                             <constraint firstItem="HtA-OW-tSn" firstAttribute="top" secondItem="ksL-eo-Sid" secondAttribute="bottom" constant="50.5" id="CUt-iN-Zwp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N8x-B8-s2Z" secondAttribute="trailing" constant="15" id="Eg9-2a-yaW"/>
                             <constraint firstItem="8hJ-3w-e7t" firstAttribute="top" secondItem="nmQ-IR-uGz" secondAttribute="bottom" constant="39" id="FXB-vs-flp"/>
                             <constraint firstItem="8hJ-3w-e7t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="GIX-c9-Eg9"/>
+                            <constraint firstAttribute="bottom" secondItem="N8x-B8-s2Z" secondAttribute="bottom" id="KPK-WH-lQl"/>
                             <constraint firstItem="8hJ-3w-e7t" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Kw4-dZ-Z0Z"/>
                             <constraint firstItem="HtA-OW-tSn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="LVB-xP-vTY"/>
                             <constraint firstItem="8hJ-3w-e7t" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MDc-Z1-fZ6"/>
+                            <constraint firstItem="Snd-ZT-Xcy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="Mou-Ze-Nnx"/>
                             <constraint firstItem="cFl-Dk-1bu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Opn-hw-czr"/>
                             <constraint firstItem="nmQ-IR-uGz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="14" id="Rrv-cf-Nij"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Snd-ZT-Xcy" secondAttribute="bottom" constant="30" id="Sfv-3e-he7"/>
                             <constraint firstItem="nmQ-IR-uGz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Top-yE-XdT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8hJ-3w-e7t" secondAttribute="trailing" constant="50" id="csI-28-73N"/>
                             <constraint firstAttribute="trailing" secondItem="HtA-OW-tSn" secondAttribute="trailing" constant="12" id="fFl-jJ-WKX"/>
-                            <constraint firstItem="Snd-ZT-Xcy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="h7b-Dc-X0O"/>
+                            <constraint firstItem="Snd-ZT-Xcy" firstAttribute="top" secondItem="cFl-Dk-1bu" secondAttribute="bottom" constant="8" id="kFj-85-PSe"/>
+                            <constraint firstItem="N8x-B8-s2Z" firstAttribute="top" secondItem="HtA-OW-tSn" secondAttribute="bottom" constant="197.66999999999999" id="qxS-Vq-bml"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PAJ-om-OCC"/>
                     <connections>
                         <outlet property="SegueLabel1" destination="Snd-ZT-Xcy" id="ALw-kB-P74"/>
+                        <outlet property="flagImage" destination="N8x-B8-s2Z" id="XDA-ca-Yqf"/>
                         <outlet property="loginButton" destination="8hJ-3w-e7t" id="48m-qw-fcG"/>
                         <outlet property="logoutButton" destination="ksL-eo-Sid" id="fjK-zA-tY6"/>
                         <outlet property="titleLabel" destination="nmQ-IR-uGz" id="J47-p3-W5z"/>
@@ -527,7 +534,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vzh-Aj-Huk">
                                 <rect key="frame" x="20" y="463" width="353" height="221"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -623,6 +630,7 @@
     <resources>
         <image name="GolfCourse.jpg" width="1500" height="609"/>
         <image name="Logo.png" width="486" height="476"/>
+        <image name="playFlag1.png" width="1016" height="1280"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
