@@ -12,54 +12,73 @@ import CoreLocation
 import AWSSigner
 import MapKit
 
-// testing frame size stuff
-let frameHeight = UIScreen.main.bounds.height
-let frameWidth = UIScreen.main.bounds.width
-var svar: Int = 0;
-
-
-// user coordinates
-var userLat: Double = 0.0
-var userLong: Double = 0.0
-
-// instances of structs
-var courseMeta: CourseMeta?
-var courseData: CourseData?
-
-// yards to the pin, obviously
-var yardsToPin: Int = 0
-
-
 class MapViewController: UIViewController, CLLocationManagerDelegate
 {
-    @IBOutlet var getLocButton: UIButton!
-    @IBOutlet var latitudeLabel: UILabel!
-    @IBOutlet var longitudeLabel: UILabel!
-    
-    let locationManager = CLLocationManager()
+    // testing frame size stuff
+        let frameHeight = UIScreen.main.bounds.height
+        let frameWidth = UIScreen.main.bounds.width
+        var svar: Int = 0;
+        
+        @IBOutlet var getLocButton: UIButton!
+        @IBOutlet var latitudeLabel: UILabel!
+        @IBOutlet var longitudeLabel: UILabel!
+        
+        // class variables
+        var holeNum: Int = 0
+        var teeNum: Int = 0
+        var holePar: Int = 0
+        var holeYards: Int = 0
+        var lat: Double = 0.0
+        var long: Double = 0.0
+        var userLat: Double = 0.0
+        var userLong: Double = 0.0
+        var teeLat: Double = 0.0
+        var teeLong: Double = 0.0
+        var yardsToPin: Int = 0
+        var bearingDegrees: Double = 0.0
+        var courseName: String = ""
+        var myString: String = ""
+        var receiverStr: String = ""
+        var nameString: String = ""
+        
+        // structs instances
+        var courseMetaClassStruct: CourseMeta?
+        var courseScorecardClassStruct: CourseScorecard?
+        var courseDataClassStruct: CourseData?
+        
+        // location manager instance
+        let locationManager = CLLocationManager()
     
     override func viewDidLoad()
-    {
-        super.viewDidLoad()
+        {
+            // fetches data from Golfbert API and fills data structs
+            fetchData()
+            sleep(1)
+            lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
+            long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
+            holePar = (courseScorecardClassStruct?.holeteeboxes[teeNum].par)!
+            holeYards = (courseScorecardClassStruct?.holeteeboxes[teeNum].length)!
+            super.viewDidLoad()
+            
+            //begin location manager
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
         
-        //begin location manager
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        
-        // first time getting distance to pin
-        let coordinate1 = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        let coordinate2 = CLLocationCoordinate2D(latitude: userLat, longitude: userLong)
-        yardsToPin = distanceInYards(from: coordinate1, to: coordinate2)
-    
-        // fetches data from Golfbert API and fills data structs
-        fetchData()
-        // loads map view and all components on top of it
-        loadMapView()
-        
-    }
+            
+            
+            // first time getting distance to pin
+            let coordinate1 = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let coordinate2 = CLLocationCoordinate2D(latitude: userLat, longitude: userLong)
+            yardsToPin = distanceInYards(from: coordinate1, to: coordinate2)
+            // this is some crazy bad code i should update - fetch takes a moment so i need to wait before
+            print("This is where i am.")
+            print((courseDataClassStruct?.resources[0].rotation)!)
+            // loads map view and all components on top of it
+            loadMapView()
+            
+        }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let location = locations.last else { return }
@@ -75,30 +94,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     }
     
     // loads the map every update
-    func loadMap() {
-        // Making the map
-        var flagPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        let flagMarker = GMSMarker(position: flagPosition)
-        var teePosition = CLLocationCoordinate2D(latitude: teeLat, longitude: teeLong)
-        let teeMarker = GMSMarker(position: teePosition)
-        teeMarker.icon = GMSMarker.markerImage(with: .blue)
-        let camera = GMSCameraPosition(
-            target: flagPosition,
-            zoom: 18,
-            bearing: bearingDegrees,
-            viewingAngle: 0
-        )
-        var mapView = GMSMapView(frame: self.view.bounds, camera: camera)
-            //this will eventually be used to change icon to flag....but the sizing is off and needs fixing
-            //flagMarker.icon = UIImage(named: "flag")
-            flagMarker.map = mapView
-            //teeMarker.map = mapView
-            mapView.settings.scrollGestures = true
-            // commenting out because the accuracy is shit
-            //mapView.settings.zoomGestures = true
-            self.view = mapView
-            mapView.mapType = .satellite
-    }
+       func loadMap() {
+           // Making the map
+           var flagPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
+           let flagMarker = GMSMarker(position: flagPosition)
+           var teePosition = CLLocationCoordinate2D(latitude: teeLat, longitude: teeLong)
+           let teeMarker = GMSMarker(position: teePosition)
+           teeMarker.icon = GMSMarker.markerImage(with: .blue)
+           let camera = GMSCameraPosition(
+               target: flagPosition,
+               zoom: 18,
+               bearing: bearingDegrees,
+               viewingAngle: 0
+           )
+           var mapView = GMSMapView(frame: self.view.bounds, camera: camera)
+               //this will eventually be used to change icon to flag....but the sizing is off and needs fixing
+               //flagMarker.icon = UIImage(named: "flag")
+               flagMarker.map = mapView
+               //teeMarker.map = mapView
+               mapView.settings.scrollGestures = true
+               // commenting out because the accuracy is shit
+               //mapView.settings.zoomGestures = true
+               self.view = mapView
+               mapView.mapType = .satellite
+       }
     
     
     @objc func SettingsbuttonAction(button: UIButton)
@@ -376,48 +395,41 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         return number * 180 / .pi
     }
     // button to go backwards
-    @objc func prevButtonTapped() {
-        // Do something when the "Previous" button is tapped
-        if (holeNum > 0){
-            holeNum -= 1
-            teeNum -= 4 // skip passed the rest of the tees
-            
-            teeLat = (courseData?.resources[holeNum])!.vectors[2].lat
-            teeLong = (courseData?.resources[holeNum])!.vectors[2].long
-            
-            holePar = (courseScorecard?.holeteeboxes[teeNum].par)!
-            holeYards = (courseScorecard?.holeteeboxes[teeNum].length)!
-            bearingDegrees = rad2deg((courseData?.resources[holeNum])!.rotation)
-            lat = (courseData?.resources[holeNum])!.flagcoords.lat
-            long = (courseData?.resources[holeNum])!.flagcoords.long
-            loadMapView()
+        @objc func prevButtonTapped() {
+            // Do something when the "Previous" button is tapped
+            if (holeNum > 0){
+                holeNum -= 1
+                teeNum -= 4 // skip passed the rest of the tees
+                
+                teeLat = (courseDataClassStruct?.resources[holeNum])!.vectors[2].lat
+                teeLong = (courseDataClassStruct?.resources[holeNum])!.vectors[2].long
+                
+                holePar = (courseScorecardClassStruct?.holeteeboxes[teeNum].par)!
+                holeYards = (courseScorecardClassStruct?.holeteeboxes[teeNum].length)!
+                bearingDegrees = rad2deg((courseDataClassStruct?.resources[holeNum])!.rotation)
+                lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
+                long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
+                loadMapView()
+            }
         }
-    }
 
     // button to go forward
-    @objc func nextButtonTapped(){
-        // Do something when the "Next" button is tapped
-        // missing the last hole!!! doing some arithmetic wrong somewhere
-        if (holeNum < 17 ){
-            print(holeNum)
-            holeNum += 1
-            teeNum += 4// skip passed the rest of the tees
-            
-            teeLat = (courseData?.resources[holeNum])!.vectors[2].lat
-            teeLong = (courseData?.resources[holeNum])!.vectors[2].long
-            
-            print("HERE --------------------------------")
-            print(teeLat)
-            print(teeLong)
-            
-            holePar = (courseScorecard?.holeteeboxes[teeNum].par)!
-            holeYards = (courseScorecard?.holeteeboxes[teeNum].length)!
-            bearingDegrees = rad2deg((courseData?.resources[holeNum])!.rotation)
-            lat = (courseData?.resources[holeNum])!.flagcoords.lat
-            long = (courseData?.resources[holeNum])!.flagcoords.long
-            loadMapView()
+        @objc func nextButtonTapped(){
+            // Do something when the "Next" button is tapped
+            // missing the last hole!!! doing some arithmetic wrong somewhere
+            if (holeNum < 17 ){
+                holeNum += 1
+                teeNum += 4// skip passed the rest of the tees
+                teeLat = (courseDataClassStruct?.resources[holeNum])!.vectors[2].lat
+                teeLong = (courseDataClassStruct?.resources[holeNum])!.vectors[2].long
+                holePar = (courseScorecardClassStruct?.holeteeboxes[teeNum].par)!
+                holeYards = (courseScorecardClassStruct?.holeteeboxes[teeNum].length)!
+                bearingDegrees = rad2deg((courseDataClassStruct?.resources[holeNum])!.rotation)
+                lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
+                long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
+                loadMapView()
+            }
         }
-    }
     
     func distanceInYards(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Int {
         let fromLocation = CLLocation(latitude: from.latitude, longitude: from.longitude)
@@ -430,53 +442,86 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     }
     
     func fetchData(){
-        // -------------------------------  START Fetching meta data -------------------------------
-        let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
-        let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
-        var signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13607")!,
-            method: .GET)
-        
-        var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
-        request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
-        
-        request.httpMethod = "GET"
-        
-        var task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                print(String(describing: error))
-                return
+            let A_Key: String = "AKIAY4WGH3URC5UYE24U"
+            let S_Key: String = "DYrgt+5aHCG33SfMiYEO8ny7NsRVGHNkcIx2Y9x7"
+            let X_API_KEY: String = "xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH"
+            let courseMetaURL: String = "https://api.golfbert.com/v1/courses/13607/holes"
+            let courseScorecardURL: String = "https://api.golfbert.com/v1/courses/13607/scorecard"
+            let courseDataURL: String = "https://api.golfbert.com/v1/courses/13607/holes"
+            
+            
+            // -------------------------------  START Fetching meta data -------------------------------
+            let credentials = StaticCredential(accessKeyId: A_Key, secretAccessKey: S_Key)
+            let signer = AWSSigner(credentials: credentials, name: "execute-api", region: "us-east-1")
+            var signedURL = signer.signURL(
+                url: URL(string: courseMetaURL)!,
+                method: .GET)
+            
+            var request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
+            request.addValue(X_API_KEY, forHTTPHeaderField: "x-api-key")
+            
+            request.httpMethod = "GET"
+            
+            var task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    print(String(describing: error))
+                    return
+                }
+                //rint(String(data: data, encoding: .utf8)!)
+                let courseMetaResponse = try? JSONDecoder().decode(CourseMeta.self, from: data)
+                self.courseMetaClassStruct = courseMetaResponse
             }
-            //rint(String(data: data, encoding: .utf8)!)
-            let courseMetaResponse = try? JSONDecoder().decode(CourseMeta.self, from: data)
-            courseMeta = courseMetaResponse
-            print("!!!!!!!!!!!! course name: \((courseMeta?.id)!))")
-        }
-        task.resume()
-        // -------------------------------  END Fetching meta data -------------------------------
-        
-        
-        // -------------------------------  START Fetching actual data -------------------------------
-        signedURL = signer.signURL(
-            url: URL(string:"https://api.golfbert.com/v1/courses/13607/holes")!,
-            method: .GET)
-        request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
-        request.addValue("xZsYxHwK7L9eiYeSzhBzf8svKqjOwwrUauEOKOKH", forHTTPHeaderField: "x-api-key")
-        
-        request.httpMethod = "GET"
-        
-        task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                print(String(describing: error))
-                return
+            task.resume()
+            // -------------------------------  END Fetching meta data -------------------------------
+            
+            
+            // -------------------------------  START Fetching scorecard data -------------------------------
+            signedURL = signer.signURL(
+                url: URL(string:courseScorecardURL)!,
+                method: .GET)
+            request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
+            request.addValue(X_API_KEY, forHTTPHeaderField: "x-api-key")
+            
+            request.httpMethod = "GET"
+            
+            task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    print(String(describing: error))
+                    return
+                }
+                //rint(String(data: data, encoding: .utf8)!)
+                let courseScorecardResponse = try? JSONDecoder().decode(CourseScorecard.self, from: data)
+                self.courseScorecardClassStruct = courseScorecardResponse
             }
-            //rint(String(data: data, encoding: .utf8)!)
-            let courseDataResponse = try? JSONDecoder().decode(CourseData.self, from: data)
-            courseData = courseDataResponse
+            task.resume()
+            // -------------------------------  END Fetching scorecard data -------------------------------
+            
+            // -------------------------------  START Fetching actual data -------------------------------
+            signedURL = signer.signURL(
+                url: URL(string:courseDataURL)!,
+                method: .GET)
+            request = URLRequest(url: signedURL, timeoutInterval: Double.infinity)
+            request.addValue(X_API_KEY, forHTTPHeaderField: "x-api-key")
+            request.httpMethod = "GET"
+            task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    print(String(describing: error))
+                    return
+                }
+                //rint(String(data: data, encoding: .utf8)!)
+                let courseDataResponse = try? JSONDecoder().decode(CourseData.self, from: data)
+                self.courseDataClassStruct = courseDataResponse
+                
+                /*
+                self.lat = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.lat
+                self.long = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.long
+                self.holePar = (self.courseScorecardClassStruct?.holeteeboxes[self.teeNum].par)!
+                self.holeYards = (self.courseScorecardClassStruct?.holeteeboxes[self.teeNum].length)!
+                 */
+            }
+            task.resume()
+            // -------------------------------  END Fetching meta data -------------------------------
         }
-        task.resume()
-        // -------------------------------  END Fetching meta data -------------------------------
-    }
     
     
     // function loads the map + other view components sitting on top of the map
@@ -490,5 +535,4 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         createThreeLabels()
        // distanceToPinLabel()
     }
-    
 }

@@ -456,7 +456,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62MH6V3HF5;
+				DEVELOPMENT_TEAM = YNKT4FK67W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";
@@ -490,7 +490,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62MH6V3HF5;
+				DEVELOPMENT_TEAM = YNKT4FK67W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CGALogin/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let app use your location for hole gps?";

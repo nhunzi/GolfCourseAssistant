@@ -15,6 +15,8 @@ import Auth0
 import AWSSigner
 
 
+
+var courseMeta: CourseMeta?
 //var courseMeta: CourseMeta?
 class ViewController: UIViewController {
   
@@ -45,6 +47,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
   
+    
   // MARK: View events
   // =================
 
