@@ -11,6 +11,9 @@ import GooglePlaces
 import CoreLocation
 import AWSSigner
 import MapKit
+import GRDB
+
+private var dbQueue: DatabaseQueue?
 
 class MapViewController: UIViewController, CLLocationManagerDelegate
 {
@@ -40,6 +43,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         var myString: String = ""
         var receiverStr: String = ""
         var nameString: String = ""
+        var holeid: Int = 0;
+        
         
         // structs instances
         var courseMetaClassStruct: CourseMeta?
@@ -58,6 +63,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
             holePar = (courseScorecardClassStruct?.holeteeboxes[teeNum].par)!
             holeYards = (courseScorecardClassStruct?.holeteeboxes[teeNum].length)!
+            print("flag lat \(lat)")
+            print("flag long \(long)")
             super.viewDidLoad()
             
             //begin location manager
@@ -65,6 +72,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+            
+            //Database
+             dbQueue = try? getDatabaseQueue()
         
             
             
@@ -77,8 +87,49 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             print((courseDataClassStruct?.resources[0].rotation)!)
             // loads map view and all components on top of it
             loadMapView()
+            LoadDBView()
+            
+        
             
         }
+    
+    
+    
+    
+    
+    func LoadDBView()
+    {
+        
+        try? dbQueue?.write { db in
+            try Hole(CourseID: courseID, holeID: holeid, Holenumber: holeNum, flagLat: lat, flagLong: long).insert(db);
+            print("Course data is in dB!!!")
+            
+        }
+        
+       
+    }
+    
+    
+    //Database
+    private func getDatabaseQueue() throws -> DatabaseQueue{
+        let fileManager = FileManager.default
+        
+        let dbPath = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("GCA_Database.db").path
+    
+       
+        print(dbPath)
+        if !fileManager.fileExists(atPath: dbPath)
+        {
+            let dbResourcePath = Bundle.main.path(forResource: "GCA_Database", ofType: "db")!
+            try fileManager.copyItem(atPath: dbResourcePath, toPath: dbPath)
+        }
+        
+        return try DatabaseQueue(path: dbPath)
+    }
+    
+    
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let location = locations.last else { return }
@@ -363,6 +414,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
        else if (svar == 10)
         {
            let destController = segue.destination as! FeedbackViewController
+           destController.getholeid = self.holeid
         }
     }
     
@@ -385,6 +437,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                 lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
                 long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
                 loadMapView()
+                viewDidLoad()
             }
         }
 
@@ -403,6 +456,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                 lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
                 long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
                 loadMapView()
+                viewDidLoad()
             }
         }
     
@@ -483,10 +537,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                     print(String(describing: error))
                     return
                 }
-                //rint(String(data: data, encoding: .utf8)!)
                 let courseDataResponse = try? JSONDecoder().decode(CourseData.self, from: data)
                 self.courseDataClassStruct = courseDataResponse
-                
+                self.holeid = (self.courseDataClassStruct?.resources[self.holeNum].id)!
+                print("Holeid is \(self.holeid)")
+                print("Hole number is \(self.holeNum)")
                 /*
                 self.lat = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.lat
                 self.long = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.long

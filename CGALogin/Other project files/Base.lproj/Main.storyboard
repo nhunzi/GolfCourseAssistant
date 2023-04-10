@@ -165,11 +165,14 @@
                                     <segue destination="K1Y-SP-8UB" kind="show" id="S0g-SC-I0W"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7A-hb-oLc">
-                                <rect key="frame" x="166" y="695" width="196" height="34"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7A-hb-oLc">
+                                <rect key="frame" x="145" y="681" width="198" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="First Time User"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Click here to create a Username">
+                                    <color key="baseForegroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="FirstTimeUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wVg-yJ-yhQ"/>
                                     <segue destination="U33-5J-Rcx" kind="show" id="f1S-QF-Swk"/>
@@ -210,6 +213,7 @@
                         <outlet property="titleLabel" destination="nmQ-IR-uGz" id="J47-p3-W5z"/>
                         <outlet property="userEmailLabel" destination="lRB-YY-WtE" id="k78-0e-YWn"/>
                         <outlet property="userInfoStack" destination="HtA-OW-tSn" id="u5V-3W-2CT"/>
+                        <outlet property="userNameButton" destination="o7A-hb-oLc" id="kUT-ju-kjS"/>
                         <outlet property="userNameLabel" destination="VbV-4W-gZm" id="496-JU-kh2"/>
                         <outlet property="userPicture" destination="TN6-kt-dDZ" id="koB-DS-acx"/>
                         <segue destination="K1Y-SP-8UB" kind="show" id="bx4-Nf-dMF"/>
@@ -253,7 +257,7 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="SaveUserName:" destination="U33-5J-Rcx" eventType="touchUpInside" id="GaP-ld-uYK"/>
-                                            <segue destination="HPD-tc-NGT" kind="unwind" unwindAction="unwindSegue:" id="J7h-ko-RiW"/>
+                                            <segue destination="HPD-tc-NGT" kind="unwind" unwindAction="unwindSegue:" id="E3c-Pg-h6G"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -328,17 +332,6 @@
                                 <color key="textColor" red="0.09297538548707962" green="0.29405158758163452" blue="0.48832404613494873" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="highlightedColor" systemColor="systemRedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6oA-Gv-3tf">
-                                <rect key="frame" x="16" y="742" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button">
-                                    <color key="baseForegroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="GetData:" destination="K1Y-SP-8UB" eventType="touchUpInside" id="m8X-1S-epI"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6uI-pw-s6k"/>
                         <color key="backgroundColor" red="0.085533551871776581" green="0.72718042135238647" blue="0.39992767572402954" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -778,6 +771,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

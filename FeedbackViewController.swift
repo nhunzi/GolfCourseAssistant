@@ -9,12 +9,16 @@ import UIKit
 import GRDB
 
 
-var myFeedback: [String] = ["Watch out for the left bunker near the green.", "Stay below the pin! There is water damage above the hole.", "Watch out for the steep slope at the green."]
+//var myFeedback: [String] = ["Watch out for the left bunker near the green.", "Stay below the pin! There is water damage above the hole.", "Watch out for the steep slope at the green."]
+var myFeedback: [String] = []
+var myComment: String = ""
 class FeedbackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //Database
    // private var players: [Player] = []
-    //private var dbQueue: DatabaseQueue?
+    private var dbQueue: DatabaseQueue?
+    
+    var getholeid: Int = 0
     
     @IBOutlet weak var FeedbackTable: UITableView!
     @IBOutlet weak var CommentBox: UITextView!
@@ -22,8 +26,10 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         //Database
-         //dbQueue = try? getDatabaseQueue()
+         dbQueue = try? getDatabaseQueue()
         
     
         FeedbackTable.delegate = self
@@ -32,7 +38,6 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     //Database
-    /*
     private func getDatabaseQueue() throws -> DatabaseQueue{
         let fileManager = FileManager.default
         
@@ -47,6 +52,7 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         return try DatabaseQueue(path: dbPath)
     }
     
+    /*
     private func loadAllData()
     {
         players = []
@@ -63,42 +69,36 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBAction func PostComment(_ sender: UIButton) {
-        //try? dbQueue?.write {
-        // db in try db.execute(sql: "INSERT INTO Player (UserName, Email) VALUES (?, ?)", arguments: [ "Cara", //"cara07@gmail"])
         
-        /*
+        myFeedback.append(CommentBox.text)
+        myComment = CommentBox.text
+        print(myFeedback)
+        CommentBox.text = ""
+        
         try? dbQueue?.write { db in
-            try db.execute(sql: """
-                CREATE TABLE Player (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    UserName TEXT NOT NULL,
-                    Email TEXT NOT NULL)
-                """)
-            try db.execute(
-                sql: "INSERT INTO Player (UserName, Email) VALUES (?, ?)", arguments: ["Juan", "Juan07@gmail"])
-               print("!!!!!!!!!!!!!!!!!Write into DB!!!!!!!5")
-            
-          //  loadAllData()
-          
-            
-            
+            try Feedback(Userid: MyUserid, CourseID: courseID, holeID: getholeid, Comment: myComment).insert(db);
         }
-        print("!!!!!!!!!!!!!!!!!Write into DB!!!!!!!1")
-         */
-    }
+        
+          //  loadAllData()
+        }
+    
+    
+    
     
     
     @IBAction func ReadBtn(_ sender: UIButton) {
-        /*
+        
+       //Read the comments into the Feedback Table, each user, 1 comment per hole
         try? dbQueue?.read { db in
-            if let row = try Row.fetchOne(db, sql: "SELECT * FROM Player WHERE id = ?", arguments: [1]) {
-                let name: String = row["UserName"]
-                let email: String = row["Email"]
-                print(name, email)
+            if let row = try Row.fetchOne(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid]) {
+                let comment: String = row["Comment"]
+                print(comment)
             }
-         */
+            print("Comments!!!")
         }
-    //}
+        
+    }
+    
     
    
     //Customize cell size

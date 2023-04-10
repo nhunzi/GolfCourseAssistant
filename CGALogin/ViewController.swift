@@ -13,16 +13,22 @@
 import UIKit
 import Auth0
 import AWSSigner
+import GRDB
 
 
-
+private var dbQueue: DatabaseQueue?
 var courseMeta: CourseMeta?
 var MyUserid: String = ""
 var MyEmail: String = ""
+var courseID: Int = 0;
+
+//Get the username out of DB and write it into Settings Textfield
+
 class ViewController: UIViewController, UITextFieldDelegate {
     
- var db: OpaquePointer?
     var playbtn: Int = 0 ;
+    var getmyId: String = "" ;
+    var Activateplaytbn: Int = 0;
     //var newbtn: Int = 10;
   
   // On-screen controls
@@ -35,10 +41,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var userPicture: UIImageView!
   
     @IBOutlet weak var SegueLabel1: UIButton!
-    
-
+    @IBOutlet weak var userNameButton: UIButton!
     @IBOutlet weak var flagImage: UIImageView!
+    
+    
     var CourseName: String = ""
+    var USERName: String = ""
     
     
     // App and user status
@@ -51,8 +59,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func PressPlay(_ sender: UIButton) {
         playbtn = 5;
+        
+        try? dbQueue?.read { db in
+            if let row = try Row.fetchOne(db, sql: "SELECT UserName, Email FROM myGolfer WHERE Userid = ?", arguments: [MyUserid]) {
+                let username: String = row["UserName"]
+                let userEmail: String = row["Email"] 
+                print(username, userEmail)
+                USERName = username
+            }
+            print("THIS WILL PRINT THE USERNAME AND EMAIL FROM DB!!!")
+        }
+        
+        //Check if course is already in database else write course into database
+        try? dbQueue?.read { db in
+            if (try Row.fetchOne(db, sql: "SELECT Name FROM Course WHERE CourseID = ?", arguments: [courseID]) != nil) {
+                print("already in db")
+             
+            }
+            else
+            {
+                try? dbQueue?.write { db in
+                    try Course(CourseID: courseID, Name: CourseName).insert(db);
+                    print("Course data is in dB!!!")
+                
+                }
+            }
+                
+         
+        }
+        
     }
-    
     
     @IBAction func FirstTimeUser(_ sender: UIButton) {
         
@@ -61,7 +97,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
 }
-
 
 extension ViewController {
   
@@ -76,8 +111,9 @@ extension ViewController {
          loginButton.isEnabled = true
          logoutButton.isEnabled = false
       
+      //Database
+       dbQueue = try? getDatabaseQueue()
       
-    
       
       // -------------------------------  START Fetching meta data -------------------------------
       let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
@@ -101,6 +137,8 @@ extension ViewController {
           courseMeta = courseMetaResponse
           print("!!!!!!!!!!!! course name: \((courseMeta?.name)!)")
           self.CourseName = ("\((courseMeta?.name)!)")
+          courseID = ((courseMeta?.id)!)
+          print("!!!!!!!!! course id: \(courseID)")
       }
       task.resume()
   }
@@ -119,7 +157,28 @@ extension ViewController {
       if userIsAuthenticated {
           logout()
         }
+      
+      
+
   }
+    
+    //Database
+    private func getDatabaseQueue() throws -> DatabaseQueue{
+        let fileManager = FileManager.default
+        
+        let dbPath = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("GCA_Database.db").path
+    
+        
+        if !fileManager.fileExists(atPath: dbPath)
+        {
+            let dbResourcePath = Bundle.main.path(forResource: "GCA_Database", ofType: "db")!
+            try fileManager.copyItem(atPath: dbResourcePath, toPath: dbPath)
+        }
+        
+        return try DatabaseQueue(path: dbPath)
+    }
+    
+    
   
   
   // MARK: UI updaters
@@ -154,7 +213,13 @@ extension ViewController {
       userNameLabel.text = user.name
          userEmailLabel.text = user.email
          userPicture.load(url: URL(string: user.picture)!)
-      MyUserid = user.id
+      
+        getmyId = user.id
+      let index = getmyId.firstIndex(of: "|") ?? MyUserid.endIndex
+      let beginning = getmyId[index...].replacingOccurrences(of: "|", with: "")
+      print(beginning)
+      MyUserid = beginning
+      
         MyEmail = user.email
       print("!!!!!!!!!!!! USERID: \((MyUserid))")
       print("!!!!!!!!!!!! USEREMAIL: \((MyEmail))")
@@ -207,8 +272,7 @@ extension ViewController {
                   self.userEmailLabel.isHidden = true//MyCode
                   self.userNameLabel.isHidden = true//MyCode
                   self.flagImage.isHidden = false //MyCode
-                  //self.SegueLabel1.titleLabel?.font = UIFont.systemFont(ofSize: 42, weight: .bold)
-                   
+                  self.userNameButton.isHidden = false
                   
                   
                                           
@@ -234,7 +298,6 @@ extension ViewController {
     }
 
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         
@@ -243,6 +306,7 @@ extension ViewController {
            let destController = segue.destination as! SearchViewController
            destController.receiverStr = self.userNameLabel.text ?? ""
            destController.nameString = self.CourseName
+           destController.getusername = self.USERName
            
        }
         else if (playbtn == 10)
@@ -252,7 +316,6 @@ extension ViewController {
             //destController.nameString = self.CourseName
     
         }
-            
        
     }
     
@@ -281,6 +344,8 @@ extension ViewController {
                  
          } // clearSession()
   }
+    
+    
   
 }
 

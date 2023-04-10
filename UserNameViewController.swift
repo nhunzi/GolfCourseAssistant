@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import GRDB
+
+private var dbQueue: DatabaseQueue?
 
 var MyUserName: String = "" ;
 
@@ -14,10 +17,12 @@ class UserNameViewController: UIViewController {
     
     @IBOutlet weak var Username: UITextField!
     
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Database
+         dbQueue = try? getDatabaseQueue()
 
        
     }
@@ -26,6 +31,11 @@ class UserNameViewController: UIViewController {
     @IBAction func SaveUserName(_ sender: UIButton) {
         MyUserName = Username.text ?? "";
         print("!!!!!!!!!!!! USERNAME: \((MyUserName))")
+        
+        try! dbQueue!.write { db in
+            try myGolfer(Userid: "\(MyUserid)", UserName: "\(MyUserName)", Email: "\(MyEmail)").insert(db)
+            print("Golfer data is in database!!!!!2")
+        }
         
     }
     
@@ -39,7 +49,23 @@ class UserNameViewController: UIViewController {
     
        
     }
+    //Database
     
+    private func getDatabaseQueue() throws -> DatabaseQueue{
+        let fileManager = FileManager.default
+        
+        let dbPath = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("GCA_Database.db").path
+    
+       
+        
+        if !fileManager.fileExists(atPath: dbPath)
+        {
+            let dbResourcePath = Bundle.main.path(forResource: "GCA_Database", ofType: "db")!
+            try fileManager.copyItem(atPath: dbResourcePath, toPath: dbPath)
+        }
+        
+        return try DatabaseQueue(path: dbPath)
+    }
 
    
 }
