@@ -12,7 +12,9 @@ import GRDB
 //var myFeedback: [String] = ["Watch out for the left bunker near the green.", "Stay below the pin! There is water damage above the hole.", "Watch out for the steep slope at the green."]
 var myFeedback: [String] = []
 var myComment: String = ""
+var mycomments: [String] = []
 class FeedbackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+   
     
     //Database
    // private var players: [Player] = []
@@ -26,14 +28,36 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         //Database
          dbQueue = try? getDatabaseQueue()
         
     
         FeedbackTable.delegate = self
         FeedbackTable.dataSource = self
+       
+        //Adds the comments to theh database and to the Array mycomments
+        addCommentData()
+        
+    }
+    
+    
+    func addCommentData()
+    {
+        
+        mycomments.removeAll()
+        //Read the comments into the Feedback Table, each user, 1 comment per hole
+         try? dbQueue?.read { db in
+             let rows = try Row.fetchAll(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid])
+             for row in rows {
+                 let comment: String  = row["Comment"]
+                 print(comment)
+                 mycomments.append(comment)
+             }
+             
+                 
+         }
+        print(mycomments)
+        
         
     }
     
@@ -52,21 +76,6 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         return try DatabaseQueue(path: dbPath)
     }
     
-    /*
-    private func loadAllData()
-    {
-        players = []
-        try? dbQueue?.read { db in
-            let rows = try Row.fetchAll (db, sql: "SELECT UserID, UserName, Email FROM Player ORDER BY UserName")
-            for row in rows {
-                players.append(Player (userID: row[0], userName: row[1], userEmail: row[2]))
-                FeedbackTable.reloadData ()
-            }
-        }
-    }
-  
-    */
-    
     
     @IBAction func PostComment(_ sender: UIButton) {
         
@@ -79,23 +88,25 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
             try Feedback(Userid: MyUserid, CourseID: courseID, holeID: getholeid, Comment: myComment).insert(db);
         }
         
-          //  loadAllData()
-        }
-    
-    
-    
-    
+        addCommentData()
+        FeedbackTable.reloadData()
+       
+        
+    }
     
     @IBAction func ReadBtn(_ sender: UIButton) {
         
+        /*
        //Read the comments into the Feedback Table, each user, 1 comment per hole
         try? dbQueue?.read { db in
-            if let row = try Row.fetchOne(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid]) {
+            let rows = try Row.fetchAll(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid])
+            for row in rows {
                 let comment: String = row["Comment"]
                 print(comment)
             }
-            print("Comments!!!")
+                
         }
+        */
         
     }
     
@@ -105,14 +116,14 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         if indexPath.section == 0 {
-            return 70 //height
+            return 50 //height
         } else {
             return 50//width
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myFeedback.count
+        return mycomments.count
         //return 3
     }
     
@@ -120,7 +131,7 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     {
         let cellfeedback = tableView.dequeueReusableCell(withIdentifier: "cellfeedback", for: indexPath)
     
-        cellfeedback.textLabel?.text = myFeedback[indexPath.row]
+        cellfeedback.textLabel?.text = mycomments[indexPath.row]
         cellfeedback.textLabel?.font = .systemFont(ofSize: 17)
         cellfeedback.textLabel?.textAlignment = .left
         cellfeedback.textLabel?.numberOfLines = 2
