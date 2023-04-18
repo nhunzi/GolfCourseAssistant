@@ -21,6 +21,7 @@ var courseMeta: CourseMeta?
 var MyUserid: String = ""
 var MyEmail: String = ""
 var courseID: Int = 0;
+var MyUserName: String = "" ;
 
 //Get the username out of DB and write it into Settings Textfield
 
@@ -29,7 +30,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var playbtn: Int = 0 ;
     var getmyId: String = "" ;
     var Activateplaytbn: Int = 0;
-    //var newbtn: Int = 10;
+    var intUser: Int = 0;
+    var usertest: String = ""
+    var mychecklist: [String] = []
+    var updateDB: Int = 0;
   
   // On-screen controls
   @IBOutlet weak var titleLabel: UILabel!
@@ -41,7 +45,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var userPicture: UIImageView!
   
     @IBOutlet weak var SegueLabel1: UIButton!
-    @IBOutlet weak var userNameButton: UIButton!
+    //@IBOutlet weak var userNameButton: UIButton!
     @IBOutlet weak var flagImage: UIImageView!
     
     
@@ -55,7 +59,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
   
   // Auth0 data
     private var user = User.empty
-  
+    
+
     
     @IBAction func PressPlay(_ sender: UIButton) {
         playbtn = 5;
@@ -94,8 +99,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         playbtn = 10;
     }
-    
-    
 }
 
 extension ViewController {
@@ -107,12 +110,15 @@ extension ViewController {
     super.viewDidLoad()
      
          updateTitle()
+         
          userInfoStack.isHidden = true
          loginButton.isEnabled = true
          logoutButton.isEnabled = false
       
       //Database
        dbQueue = try? getDatabaseQueue()
+       updateDB = 0;
+      
       
       
       // -------------------------------  START Fetching meta data -------------------------------
@@ -141,9 +147,10 @@ extension ViewController {
           print("!!!!!!!!! course id: \(courseID)")
       }
       task.resume()
+      
+      
   }
-  
-  
+    
   // MARK: Actions
   // =============
 
@@ -211,23 +218,63 @@ extension ViewController {
   
   func updateUserInfoUI() {
       userNameLabel.text = user.name
-         userEmailLabel.text = user.email
-         userPicture.load(url: URL(string: user.picture)!)
+      userEmailLabel.text = user.email
+      userPicture.load(url: URL(string: user.picture)!)
+      updateDB = 0
       
-        getmyId = user.id
+      getmyId = user.id
       let index = getmyId.firstIndex(of: "|") ?? MyUserid.endIndex
       let beginning = getmyId[index...].replacingOccurrences(of: "|", with: "")
       print(beginning)
       MyUserid = beginning
+      MyEmail = user.email
       
-        MyEmail = user.email
+      let myindex = MyEmail.firstIndex(of: "@") ?? MyEmail.endIndex
+      let mybegin = MyEmail[..<myindex].replacingOccurrences(of: "@", with: "")
+      MyUserName = mybegin
+     
       print("!!!!!!!!!!!! USERID: \((MyUserid))")
       print("!!!!!!!!!!!! USEREMAIL: \((MyEmail))")
+      print("!!!!!!!!!!!! USERName: \((MyUserName))")
+     
+      
+      //Pull all the Userid's from the database and add it to mychecklist
+      try! dbQueue!.read { db in
+          let rows = try Row.fetchAll(db, sql: "SELECT * FROM myGolfer")
+              for row in rows{
+                  let comment: String = row["Userid"]
+                  mychecklist.append(comment)
+              }
+             print(mychecklist)
+        }
+              
+              
+      //Test if userID is in the database
+      var count: Int = 0
+      for list in mychecklist
+      {
+          let myval = mychecklist[count]
+          if (myval == MyUserid)
+          {
+              updateDB = 1
+          }
+          count = count + 1
+      }
+      print(updateDB)
+      print(mychecklist)
+     
+      //If the Userid is not in the database, add the new record
+      if(updateDB == 0)
+      {
+         try? dbQueue?.write { db in
+             try myGolfer(Userid: "\(MyUserid)", UserName: "\(MyUserName)", Email: "\(MyEmail)").insert(db)
+             print("Golfer data is in database!!!!!2")
+         }
+     }
+     
       
   }
     
-    
-  
   
   // MARK: Login, logout, and user information
   // =========================================
@@ -272,7 +319,7 @@ extension ViewController {
                   self.userEmailLabel.isHidden = true//MyCode
                   self.userNameLabel.isHidden = true//MyCode
                   self.flagImage.isHidden = false //MyCode
-                  self.userNameButton.isHidden = false
+                  
                   
                   
                                           
@@ -282,7 +329,6 @@ extension ViewController {
                                 self.updateUserInfoUI()
                                 
                               }
-                  
                   
               } // switch
                 
@@ -309,13 +355,6 @@ extension ViewController {
            destController.getusername = self.USERName
            
        }
-        else if (playbtn == 10)
-        {
-            let destController = segue.destination as! UserNameViewController
-            //destController.receiverStr = self.userNameLabel.text ?? ""
-            //destController.nameString = self.CourseName
-    
-        }
        
     }
     
@@ -348,7 +387,6 @@ extension ViewController {
     
   
 }
-
 
 // MARK: Utilities
 // ===============

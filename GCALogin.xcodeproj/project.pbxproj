@@ -21,7 +21,6 @@
 		B56E37B6298749BD00126E90 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = B56E37B5298749BD00126E90 /* Auth0 */; };
 		B56E37B829874DB800126E90 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E37B729874DB800126E90 /* SearchViewController.swift */; };
 		B56E37BA29883EF200126E90 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B56E37B929883EF200126E90 /* Logo.png */; };
-		B5B49E7729D891F5008C194A /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B49E7629D891F5008C194A /* UserNameViewController.swift */; };
 		B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */; };
 		B5BD8E3B29A5AA6E00F359BB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */; };
 		B5DC8DA029E0DB8300D0D824 /* DBData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DC8D9F29E0DB8300D0D824 /* DBData.swift */; };
@@ -52,7 +51,6 @@
 		B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		B56E37B729874DB800126E90 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B56E37B929883EF200126E90 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
-		B5B49E7629D891F5008C194A /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		B5DC8D9F29E0DB8300D0D824 /* DBData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBData.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 			children = (
 				B5DC8DA129E3601700D0D824 /* DBQueueFile.swift */,
 				B5FAE5CE29D8BC5B006B4D48 /* res */,
-				B5B49E7629D891F5008C194A /* UserNameViewController.swift */,
 				B515887029D618CB006E112B /* Images */,
 				B5E37B3A29D7A30C00F1D8E8 /* GolfCourseData */,
 				B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */,
@@ -357,7 +354,6 @@
 				D42890D1284C5CED006AFB73 /* SceneDelegate.swift in Sources */,
 				B54565DB29884BAA00DB6F37 /* MapViewController.swift in Sources */,
 				037FFEEF29B1A9A300BE4128 /* CourseMeta.swift in Sources */,
-				B5B49E7729D891F5008C194A /* UserNameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

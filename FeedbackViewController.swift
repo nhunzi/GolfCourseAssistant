@@ -8,16 +8,11 @@
 import UIKit
 import GRDB
 
-
-//var myFeedback: [String] = ["Watch out for the left bunker near the green.", "Stay below the pin! There is water damage above the hole.", "Watch out for the steep slope at the green."]
 var myFeedback: [String] = []
 var myComment: String = ""
 var mycomments: [String] = []
 class FeedbackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
-    
-    //Database
-   // private var players: [Player] = []
     private var dbQueue: DatabaseQueue?
     
     var getholeid: Int = 0
@@ -94,22 +89,6 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    @IBAction func ReadBtn(_ sender: UIButton) {
-        
-        /*
-       //Read the comments into the Feedback Table, each user, 1 comment per hole
-        try? dbQueue?.read { db in
-            let rows = try Row.fetchAll(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid])
-            for row in rows {
-                let comment: String = row["Comment"]
-                print(comment)
-            }
-                
-        }
-        */
-        
-    }
-    
     
    
     //Customize cell size
@@ -135,9 +114,6 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         cellfeedback.textLabel?.font = .systemFont(ofSize: 17)
         cellfeedback.textLabel?.textAlignment = .left
         cellfeedback.textLabel?.numberOfLines = 2
-        
-        //let player = players[indexPath.row]
-       // cell.textLabel.text = player.getName()
        
         return cellfeedback
     }
