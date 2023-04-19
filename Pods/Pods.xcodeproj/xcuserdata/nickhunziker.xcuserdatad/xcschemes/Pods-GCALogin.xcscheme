@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EC22B2E8541C825F6552F399475C6698"
-               BuildableName = "libPods-GCALogin.a"
+               BuildableName = "Pods_GCALogin.framework"
                BlueprintName = "Pods-GCALogin"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

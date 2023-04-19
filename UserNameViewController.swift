@@ -23,6 +23,16 @@ class UserNameViewController: UIViewController {
         super.viewDidLoad()
         //Database
          dbQueue = try? getDatabaseQueue()
+        
+        try? dbQueue?.write {db in try
+            db.create (table: "myGolfer"){ t in
+                t.column("Userid", .text ).primaryKey()
+                t.column("UserName", .text ).notNull()
+                t.column("Email", .text ).notNull()
+                
+            }
+            print("Golfer data is in db")
+        }
 
        
     }

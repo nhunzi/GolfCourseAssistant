@@ -8,23 +8,29 @@ PODS:
   - GRDB.swift (6.10.1):
     - GRDB.swift/standard (= 6.10.1)
   - GRDB.swift/standard (6.10.1)
+  - SQLite.swift (0.14.1):
+    - SQLite.swift/standard (= 0.14.1)
+  - SQLite.swift/standard (0.14.1)
 
 DEPENDENCIES:
   - GoogleMaps (= 7.3.0)
   - GooglePlaces (= 7.3.0)
   - GRDB.swift
+  - SQLite.swift (~> 0.14.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - GoogleMaps
     - GooglePlaces
     - GRDB.swift
+    - SQLite.swift
 
 SPEC CHECKSUMS:
   GoogleMaps: a146f275ee429d14822178c7a841c03366ec92a1
   GooglePlaces: 0609463845250bbadafa1739938181e54dece439
   GRDB.swift: 1cc67278f1a9878d6eb1b849485518112b79cab7
+  SQLite.swift: 2992550ebf3c5b268bf4352603e3df87d2a4ed72
 
-PODFILE CHECKSUM: ca4f3744fcabba472685446552db81610407cef6
+PODFILE CHECKSUM: 38dc37bbcc794ebed75e60fb158acabc37569df6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3

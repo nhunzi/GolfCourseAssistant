@@ -56,6 +56,9 @@ class SearchViewController : UIViewController
     
     
     @IBAction func ClickGo(_ sender: UIButton) {
+        
+        
+        
 
         let golfers: [myGolfer] = try! dbQueue!.read { db in
             try myGolfer.fetchAll(db)
@@ -82,6 +85,7 @@ class SearchViewController : UIViewController
     
        
         print(dbPath)
+        
         if !fileManager.fileExists(atPath: dbPath)
         {
             let dbResourcePath = Bundle.main.path(forResource: "GCA_Database", ofType: "db")!

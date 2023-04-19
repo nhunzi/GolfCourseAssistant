@@ -97,6 +97,25 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     
     
+    func sendToDB(){
+        
+        // defining all the stuff we need to send to DB when "save shot" button hit.
+        
+        // userLat -> var for latuserLocation
+        // userLong -> var for longuserLocation
+        // struct fetch for courseid
+        // holeNum
+        // userName from DB
+        // shotNumber - variable that is incremented for each shot on a given hole to keep track of shots.
+        
+        //try? dbQueue?.write { db in
+        //try UserShotLocation(CourseID: courseID, holeID: holeid, Holenumber: holeNum, lat: userLat, long: userLong, shotNumber: shotNumber, ).insert(db);
+        
+        
+        
+    }
+    
+    
     func LoadDBView()
     {
         
@@ -139,7 +158,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             let coordinate2 = CLLocationCoordinate2D(latitude: userLat, longitude: userLong)
             
             yardsToPin = distanceInYards(from: coordinate1, to: coordinate2)
-           createThreeLabels()
+            createThreeLabels()
            // distanceToPinLabel()
             //print("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
     }
