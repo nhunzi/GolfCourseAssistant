@@ -15,12 +15,19 @@ import GRDB
 
 private var dbQueue: DatabaseQueue?
 
+
+//To switch between yards and meters
+var myUnits: Int = 0
+
 class MapViewController: UIViewController, CLLocationManagerDelegate
 {
     // testing frame size stuff
         let frameHeight = UIScreen.main.bounds.height
         let frameWidth = UIScreen.main.bounds.width
         var svar: Int = 0;
+        //Unit variables
+        var mynewhole: Double = 0
+        var mynewpin: Double = 0
         
         @IBOutlet var getLocButton: UIButton!
         @IBOutlet var latitudeLabel: UILabel!
@@ -56,6 +63,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     override func viewDidLoad()
         {
+            
             // fetches data from Golfbert API and fills data structs
             fetchData()
             sleep(1)
@@ -65,6 +73,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             holeYards = (courseScorecardClassStruct?.holeteeboxes[teeNum].length)!
             print("flag lat \(lat)")
             print("flag long \(long)")
+        
             super.viewDidLoad()
             
             //begin location manager
@@ -86,10 +95,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             print("This is where i am.")
             print((courseDataClassStruct?.resources[0].rotation)!)
             // loads map view and all components on top of it
+        
             loadMapView()
             LoadDBView()
             
-        
             
         }
     
@@ -115,7 +124,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         
     }
     
-    
+
     func LoadDBView()
     {
         
@@ -213,11 +222,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     func createSettingsButton(){
         let button = UIButton(type: .system)
         button.frame = CGRect(x: frameWidth - 45, y: 90, width: 25, height: 25)
-       // button.backgroundColor = .white
         button.configuration = .plain()
         button.setTitle("", for: .normal)
-      //  button.setAttributedTitle(attributedString, for: .normal)
-       // button.configuration?.image = UIImage(systemName: "figure.golf")
         button.layer.cornerRadius = 8
         button.contentEdgeInsets = UIEdgeInsets(
           top: 10,
@@ -247,8 +253,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         button.backgroundColor = .white
         button.configuration = .plain()
         button.setTitle("Statistics", for: .normal)
-      //  button.setAttributedTitle(attributedString, for: .normal)
-       // button.configuration?.image = UIImage(systemName: "figure.golf")
         button.layer.cornerRadius = 8
         button.contentEdgeInsets = UIEdgeInsets(
           top: 10,
@@ -258,13 +262,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
           )
         let customButtonTitle = NSMutableAttributedString(string: "Statistics", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15),
-            //NSAttributedString.Key.backgroundColor: UIColor.red,
             NSAttributedString.Key.foregroundColor: UIColor.systemTeal
         ])
         button.configuration?.baseForegroundColor = .systemTeal
         button.configuration?.image = UIImage(systemName: "equal")
         button.setAttributedTitle(customButtonTitle, for: .normal)
-       // button.addTarget(self, action: #selector(SettingsbuttonAction), for: .touchUpInside)
         self.view.addSubview(button)
        
        
@@ -274,13 +276,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     func createNextAndPrevious(){
         let prevButton = UIButton(type: .system)
                 prevButton.setTitle("Previous", for: .normal)
-                //prevButton.frame = CGRect(x: 0, y: frameHeight-60, width: 120, height: 60)
-               // prevButton.backgroundColor = .white
                 prevButton.configuration = .plain()
                 prevButton.configuration?.baseForegroundColor = .white
         let customButtonTitle = NSMutableAttributedString(string: "Previous", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
-            //NSAttributedString.Key.backgroundColor: UIColor.red,
             NSAttributedString.Key.foregroundColor: UIColor.white
         ])
              prevButton.setAttributedTitle(customButtonTitle, for: .normal)
@@ -355,7 +354,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         lbl3.backgroundColor = .white
         lbl3.font = UIFont.boldSystemFont(ofSize: 20)
         lbl3.textColor = UIColor(red: 188/255, green: 143/255, blue: 143/255, alpha: 1.0)
-        lbl3.text = "Yardage: \(holeYards)"
+        if (myUnits == 1)
+        {
+            mynewhole = Double(holeYards)*0.9144  //ADD
+            lbl3.text = "Meters: \(Int(mynewhole))"
+        }
+        else if (myUnits == 0)
+        {
+            lbl3.text = "Yardage: \(holeYards)"
+        }
+       
+       
         lbl3.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(lbl3)
         
@@ -364,7 +373,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         lbl4.backgroundColor = .white
         lbl4.font = UIFont.boldSystemFont(ofSize: 20)
         lbl4.textColor = UIColor(red: 188/255, green: 143/255, blue: 143/255, alpha: 1.0)
-        lbl4.text = "\(yardsToPin) yards to pin"
+        if (myUnits == 1)
+        {
+            mynewpin = Double(yardsToPin)*0.9144  //ADD
+           
+            lbl4.text = "\(Int(mynewpin)) meters to pin"
+        }
+        else if (myUnits == 0)
+        {
+            lbl4.text = "\(yardsToPin) yards to pin"
+        }
+        
         lbl4.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(lbl4)
 
@@ -455,6 +474,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                 bearingDegrees = rad2deg((courseDataClassStruct?.resources[holeNum])!.rotation)
                 lat = (courseDataClassStruct?.resources[holeNum])!.flagcoords.lat
                 long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
+                
                 loadMapView()
                 viewDidLoad()
             }
@@ -476,6 +496,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                 long = (courseDataClassStruct?.resources[holeNum])!.flagcoords.long
                 loadMapView()
                 viewDidLoad()
+                
             }
         }
     

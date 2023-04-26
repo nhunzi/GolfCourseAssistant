@@ -21,6 +21,7 @@
 		B56E37B6298749BD00126E90 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = B56E37B5298749BD00126E90 /* Auth0 */; };
 		B56E37B829874DB800126E90 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E37B729874DB800126E90 /* SearchViewController.swift */; };
 		B56E37BA29883EF200126E90 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B56E37B929883EF200126E90 /* Logo.png */; };
+		B590951129F6E9C00098D3A5 /* golfcourse.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B590951029F6E9C00098D3A5 /* golfcourse.jpeg */; };
 		B5BD8E3729A5A1B600F359BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */; };
 		B5BD8E3B29A5AA6E00F359BB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */; };
 		B5DC8DA029E0DB8300D0D824 /* DBData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DC8D9F29E0DB8300D0D824 /* DBData.swift */; };
@@ -51,6 +52,7 @@
 		B55F0C3A2990930200A871BD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		B56E37B729874DB800126E90 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B56E37B929883EF200126E90 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		B590951029F6E9C00098D3A5 /* golfcourse.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = golfcourse.jpeg; sourceTree = "<group>"; };
 		B5BD8E3629A5A1B600F359BB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B5BD8E3A29A5AA6E00F359BB /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		B5DC8D9F29E0DB8300D0D824 /* DBData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBData.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		B515887029D618CB006E112B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B590951029F6E9C00098D3A5 /* golfcourse.jpeg */,
 				B56E37B929883EF200126E90 /* Logo.png */,
 				B5F1FDE929D3CE3A0084FBA5 /* GolfCourse.jpg */,
 				B515886C29D60D9D006E112B /* playFlag0.gif */,
@@ -263,6 +266,7 @@
 				B515886D29D60D9D006E112B /* playFlag0.gif in Resources */,
 				B5FAE5D029D8BCCC006B4D48 /* GCA_Database.db in Resources */,
 				D42890D8284C5CEF006AFB73 /* Assets.xcassets in Resources */,
+				B590951129F6E9C00098D3A5 /* golfcourse.jpeg in Resources */,
 				B515886F29D60DA1006E112B /* playFlag1.png in Resources */,
 				B5F1FDEA29D3CE3B0084FBA5 /* GolfCourse.jpg in Resources */,
 				B56E37BA29883EF200126E90 /* Logo.png in Resources */,
