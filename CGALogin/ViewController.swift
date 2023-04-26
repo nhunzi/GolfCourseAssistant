@@ -249,7 +249,7 @@ extension ViewController {
               }
              print(mychecklist)
         }
-              
+         
               
       //Test if userID is in the database
       var count: Int = 0
