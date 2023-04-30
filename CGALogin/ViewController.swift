@@ -110,6 +110,7 @@ extension ViewController {
     super.viewDidLoad()
       
     
+      
      
          updateTitle()
          
@@ -121,7 +122,15 @@ extension ViewController {
        dbQueue = try? getDatabaseQueue()
        updateDB = 0;
       
+      print("----here-----")
+      print(dbQueue!)
+      print("-----end-----")
       
+      /*
+      let golfers: [myGolfer] = try dbQueue!.read { db in
+          try myGolfer.fetchAll(db)
+      }
+      */
       
       // -------------------------------  START Fetching meta data -------------------------------
       let credentials = StaticCredential(accessKeyId: "AKIAY4WGH3URC5UYE24U", secretAccessKey: "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")
@@ -175,8 +184,9 @@ extension ViewController {
     private func getDatabaseQueue() throws -> DatabaseQueue{
         let fileManager = FileManager.default
         
-        let dbPath = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("GCA_Database.db").path
+        //let dbPath = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("GCA_Database.db").path
     
+        let dbPath = "/Users/nickhunziker/Workspace/gcaDB.db"
         
         if !fileManager.fileExists(atPath: dbPath)
         {

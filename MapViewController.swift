@@ -89,7 +89,47 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             loadMapView()
             LoadDBView()
             
+            // new code
+            let circleSize: CGFloat = 20
+                    let spacing: CGFloat = 10
+                    let startY: CGFloat = 200
+            let circle1 = CAShapeLayer()
+            let circle2 = CAShapeLayer()
+            let circle3 = CAShapeLayer()
+            let circle4 = CAShapeLayer()
+            let circle5 = CAShapeLayer()
+            circle1.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                       y: startY + CGFloat(0) * (circleSize + spacing),
+                                                       width: circleSize,
+                                                       height: circleSize)).cgPath
+            circle1.fillColor = UIColor.blue.cgColor
+            circle2.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                       y: startY + CGFloat(1) * (circleSize + spacing),
+                                                       width: circleSize,
+                                                       height: circleSize)).cgPath
+            circle2.fillColor = UIColor.green.cgColor
+            circle3.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                       y: startY + CGFloat(2) * (circleSize + spacing),
+                                                       width: circleSize,
+                                                       height: circleSize)).cgPath
+            circle3.fillColor = UIColor.yellow.cgColor
+            circle4.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                       y: startY + CGFloat(3) * (circleSize + spacing),
+                                                       width: circleSize,
+                                                       height: circleSize)).cgPath
+            circle4.fillColor = UIColor.orange.cgColor
+            circle5.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                       y: startY + CGFloat(4) * (circleSize + spacing),
+                                                       width: circleSize,
+                                                       height: circleSize)).cgPath
+            circle5.fillColor = UIColor.red.cgColor
+            view.layer.addSublayer(circle1)
+            view.layer.addSublayer(circle2)
+            view.layer.addSublayer(circle3)
+            view.layer.addSublayer(circle4)
+            view.layer.addSublayer(circle5)
         
+            // new code end
             
         }
     
@@ -99,20 +139,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     func sendToDB(){
         
-        // defining all the stuff we need to send to DB when "save shot" button hit.
-        
-        // userLat -> var for latuserLocation
-        // userLong -> var for longuserLocation
-        // struct fetch for courseid
-        // holeNum
-        // userName from DB
-        // shotNumber - variable that is incremented for each shot on a given hole to keep track of shots.
-        
-        //try? dbQueue?.write { db in
-        //try UserShotLocation(CourseID: courseID, holeID: holeid, Holenumber: holeNum, lat: userLat, long: userLong, shotNumber: shotNumber, ).insert(db);
-        
-        
-        
+        do {
+            try dbQueue!.write { db in
+                try db.execute(
+                    sql: "INSERT INTO Feedback (Userid, CourseID, holeID, comment) VALUES (?, ?, ?, ?)",
+                    arguments: [-1, -1, -1, "Testing database"])
+                    
+                    
+                    //sql: "INSERT INTO GroupShotLocations (course_id, user_id, date, lat, long, shot_number) VALUES (?, ?, ?, ?, ?, ?)",
+                    //arguments: [0, 101010, "test-date", userLat, userLong, 0])
+                }
+        } catch {
+            
+            print(error)
+        }
     }
     
     
@@ -207,7 +247,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     @objc func EmptybuttonAction(button: UIButton)
     {
-        print("Button Pressed")
+        print("DB test button pressed")
+        sendToDB()
     }
 
     func createSettingsButton(){

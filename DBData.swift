@@ -39,3 +39,12 @@ struct Feedback: Codable, FetchableRecord, PersistableRecord {
     var Comment: String
     
 }
+
+struct ShotLocation : Codable, FetchableRecord, PersistableRecord {
+    var CourseID: Int
+    var holeID: Int
+    var Date: String
+    var lat: Double
+    var long: Double
+    var shot_number: Int
+}
