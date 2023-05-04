@@ -14,7 +14,7 @@ import MapKit
 import GRDB
 
 private var dbQueue: DatabaseQueue?
-
+var mapView = GMSMapView()
 
 //To switch between yards and meters
 var myUnits: Int = 0
@@ -99,30 +99,132 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
             loadMapView()
             LoadDBView()
             
-            
+            let circleSize: CGFloat = 20
+            let spacing: CGFloat = 10
+            let startY: CGFloat = 200
+
+            // Define the circle colors and labels
+            let circleColors: [CGColor] = [UIColor.blue.cgColor, UIColor.green.cgColor, UIColor.gray.cgColor, UIColor.orange.cgColor, UIColor.red.cgColor]
+            let labels: [String] = ["Eagle", "Birdie", "Par", "Bogey", "Bogey+"]
+
+            // Loop through each circle and create a shape layer and label
+            for i in 0..<circleColors.count {
+                // Create the shape layer
+                let circleLayer = CAShapeLayer()
+                circleLayer.path = UIBezierPath(ovalIn: CGRect(x: view.bounds.width - circleSize - spacing,
+                                                               y: startY + CGFloat(i) * (circleSize + spacing),
+                                                               width: circleSize,
+                                                               height: circleSize)).cgPath
+                circleLayer.fillColor = circleColors[i]
+                view.layer.addSublayer(circleLayer)
+                
+                // Create the label
+                let label = UILabel(frame: CGRect(x: view.bounds.width - circleSize - spacing * 2 - 100,
+                                                  y: startY + CGFloat(i) * (circleSize + spacing),
+                                                  width: 100,
+                                                  height: circleSize))
+                label.text = labels[i]
+                label.textColor = .white
+                label.textAlignment = .right
+                view.addSubview(label)
+            }
         }
     
     
     
-    
+    func displayHoleShots(){
+            print("Hi")
+            print(holeNum)
+            //Pull all the Userid's from the database and add it to mychecklist
+            try! dbQueue!.read { db in
+                let rows = try Row.fetchAll(db, sql: "SELECT * FROM GroupShotLocations WHERE course_id = 13607 AND hole = \(holeNum+1)")
+                    for row in rows{
+                        let responseLat: String = row["lat"]
+                        let responseLong: String = row["long"]
+                        let responsePar: Int = row["par"]
+                        
+                        let recordedPar = responsePar
+                        let recordedLat = Double(responseLat)!
+                        let recordedLong = Double(responseLong)!
+                        print(recordedLat)
+                        print(recordedLong)
+                        print(recordedPar)
+                        
+                        
+                        var recordedCoord = CLLocationCoordinate2D(latitude: recordedLat, longitude: recordedLong)
+                        
+                        if(recordedPar < holePar){
+                            // place blue marker
+                            let shotMarker = GMSMarker(position: recordedCoord)
+                            shotMarker.icon = GMSMarker.markerImage(with: .blue)
+                            shotMarker.map = mapView
+
+                        }
+                        else if(recordedPar == holePar){
+                            // place green marker
+                            let shotMarker = GMSMarker(position: recordedCoord)
+                            shotMarker.icon = GMSMarker.markerImage(with: .green)
+                            shotMarker.map = mapView
+                            
+                            
+                        }
+                        else if(recordedPar == holePar+1){
+                            // place yellow marker
+                            let shotMarker = GMSMarker(position: recordedCoord)
+                            shotMarker.icon = GMSMarker.markerImage(with: .white)
+                            shotMarker.map = mapView
+                        }
+                        else if(recordedPar == holePar+2){
+                            // place orange marker
+                            let shotMarker = GMSMarker(position: recordedCoord)
+                            shotMarker.icon = GMSMarker.markerImage(with: .orange)
+                            shotMarker.map = mapView
+                        }
+                        else{
+                            // place red marker
+                            let shotMarker = GMSMarker(position: recordedCoord)
+                            shotMarker.icon = GMSMarker.markerImage(with: .red)
+                            shotMarker.map = mapView
+                        }
+                        
+                        
+                        print(responseLat)
+                        print("----------------")
+                        print(responseLong)
+                        
+                        
+                        
+                    }
+              }
+        }
     
     func sendToDB(){
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
         
-        // defining all the stuff we need to send to DB when "save shot" button hit.
-        
-        // userLat -> var for latuserLocation
-        // userLong -> var for longuserLocation
-        // struct fetch for courseid
-        // holeNum
-        // userName from DB
-        // shotNumber - variable that is incremented for each shot on a given hole to keep track of shots.
-        
-        //try? dbQueue?.write { db in
-        //try UserShotLocation(CourseID: courseID, holeID: holeid, Holenumber: holeNum, lat: userLat, long: userLong, shotNumber: shotNumber, ).insert(db);
+        // creates random par that the user scored. obviously we need to change this.
+        let parShot = Int.random(in: 3...7)
+
         
         
-        
-    }
+            do {
+                try dbQueue!.write { db in
+                    try db.execute(
+                        //sql: "INSERT INTO Feedback (Userid, CourseID, holeID, comment) VALUES (?, ?, ?, ?)",
+                        //arguments: [-1, -1, -1, "Testing database"])
+                        
+                        
+                        sql: "INSERT INTO GroupShotLocations (course_id, user_id, date, lat, long, par, hole) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        arguments: [courseID, MyUserid, dateString, String(userLat), String(userLong), parShot, holeNum+1])
+                    }
+            } catch {
+                
+                print(error)
+            }
+             
+        }
     
 
     func LoadDBView()
@@ -177,6 +279,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
            // Making the map
            var flagPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
            let flagMarker = GMSMarker(position: flagPosition)
+           flagMarker.icon = GMSMarker.markerImage(with: .brown)
            var teePosition = CLLocationCoordinate2D(latitude: teeLat, longitude: teeLong)
            let teeMarker = GMSMarker(position: teePosition)
            teeMarker.icon = GMSMarker.markerImage(with: .blue)
@@ -186,7 +289,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                bearing: bearingDegrees,
                viewingAngle: 0
            )
-           var mapView = GMSMapView(frame: self.view.bounds, camera: camera)
+           mapView = GMSMapView(frame: self.view.bounds, camera: camera)
                //this will eventually be used to change icon to flag....but the sizing is off and needs fixing
                //flagMarker.icon = UIImage(named: "flag")
                flagMarker.map = mapView
@@ -201,7 +304,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     @objc func SettingsbuttonAction(button: UIButton)
     {
-        print("button Pressed")
         svar = 5;
         
         performSegue(withIdentifier: "SettingsSegue", sender: self)
@@ -216,9 +318,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     
     @objc func EmptybuttonAction(button: UIButton)
     {
+        sendToDB()
         print("Button Pressed")
     }
+    @objc func StatsButtonAction(button: UIButton)
+    {
+        displayHoleShots()
+    }
+    
+    
+    
 
+    
     func createSettingsButton(){
         let button = UIButton(type: .system)
         button.frame = CGRect(x: frameWidth - 45, y: 90, width: 25, height: 25)
@@ -249,10 +360,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
    
     func createStatisticsButton(){
         let button = UIButton(type: .system)
-        button.frame = CGRect(x: 0, y: frameHeight-60, width: 120, height: 60)
+        button.frame = CGRect(x: 0, y: frameHeight-60, width: 150, height: 60)
         button.backgroundColor = .white
         button.configuration = .plain()
-        button.setTitle("Statistics", for: .normal)
+        button.setTitle("Show Statistics", for: .normal)
         button.layer.cornerRadius = 8
         button.contentEdgeInsets = UIEdgeInsets(
           top: 10,
@@ -260,13 +371,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
           bottom: 10,
           right: 20
           )
-        let customButtonTitle = NSMutableAttributedString(string: "Statistics", attributes: [
+        let customButtonTitle = NSMutableAttributedString(string: "Show Stats", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15),
             NSAttributedString.Key.foregroundColor: UIColor.systemTeal
         ])
         button.configuration?.baseForegroundColor = .systemTeal
-        button.configuration?.image = UIImage(systemName: "equal")
+        button.configuration?.image = UIImage(systemName: "chart.bar")
         button.setAttributedTitle(customButtonTitle, for: .normal)
+        
+        button.addTarget(self, action: #selector(StatsButtonAction), for: .touchUpInside)
         self.view.addSubview(button)
        
        
@@ -316,7 +429,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         let button = UIButton(type: .system)
         button.frame = CGRect(x: frameWidth/2 - 87, y: frameHeight-60, width: 175, height: 60)
         button.backgroundColor = .white
-        button.setTitle("Hole \(holeNum+1)", for: .normal)
+        button.setTitle("Mark Shot", for: .normal)
         button.layer.cornerRadius = 8
         button.configuration = .plain()
         button.contentEdgeInsets = UIEdgeInsets(
@@ -582,12 +695,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
                 self.holeid = (self.courseDataClassStruct?.resources[self.holeNum].id)!
                 print("Holeid is \(self.holeid)")
                 print("Hole number is \(self.holeNum)")
-                /*
-                self.lat = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.lat
-                self.long = (self.courseDataClassStruct?.resources[self.holeNum])!.flagcoords.long
-                self.holePar = (self.courseScorecardClassStruct?.holeteeboxes[self.teeNum].par)!
-                self.holeYards = (self.courseScorecardClassStruct?.holeteeboxes[self.teeNum].length)!
-                 */
+            
             }
             task.resume()
             // -------------------------------  END Fetching meta data -------------------------------

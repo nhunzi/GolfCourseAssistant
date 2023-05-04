@@ -16,6 +16,7 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     private var dbQueue: DatabaseQueue?
     
     var getholeid: Int = 0
+    var time: [String] = []
     
     @IBOutlet weak var FeedbackTable: UITableView!
     @IBOutlet weak var CommentBox: UITextView!
@@ -42,16 +43,19 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         mycomments.removeAll()
         //Read the comments into the Feedback Table, each user, 1 comment per hole
          try? dbQueue?.read { db in
-             let rows = try Row.fetchAll(db, sql: "SELECT Comment FROM Feedback WHERE holeID = ?", arguments: [getholeid])
+             let rows = try Row.fetchAll(db, sql: "SELECT Comment, Date FROM Feedback WHERE holeID = ?", arguments: [getholeid])
              for row in rows {
                  let comment: String  = row["Comment"]
+                 let mytime: String = row["Date"]
                  print(comment)
                  mycomments.append(comment)
+                 time.append(mytime)
              }
              
                  
          }
         print(mycomments)
+        print(time)
         
         
     }
@@ -73,6 +77,12 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBAction func PostComment(_ sender: UIButton) {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let dateString = dateFormatter.string(from: Date())
+        
         
         myFeedback.append(CommentBox.text)
         myComment = CommentBox.text
@@ -80,7 +90,7 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
         CommentBox.text = ""
         
         try? dbQueue?.write { db in
-            try Feedback(Userid: MyUserid, CourseID: courseID, holeID: getholeid, Comment: myComment).insert(db);
+            try Feedback(Userid: MyUserid, CourseID: courseID, holeID: getholeid, Comment: myComment, Date: dateString).insert(db);
         }
         
         addCommentData()
@@ -108,14 +118,51 @@ class FeedbackViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cellfeedback = tableView.dequeueReusableCell(withIdentifier: "cellfeedback", for: indexPath)
+       
     
+        
+        let cellfeedback = tableView.dequeueReusableCell(withIdentifier: "cellfeedback", for: indexPath)
+        
         cellfeedback.textLabel?.text = mycomments[indexPath.row]
         cellfeedback.textLabel?.font = .systemFont(ofSize: 17)
         cellfeedback.textLabel?.textAlignment = .left
         cellfeedback.textLabel?.numberOfLines = 2
-       
+        
+        // Create a UILabel for the time and set its properties
+        let timeLabel = UILabel(frame: CGRect(x: cellfeedback.frame.width - 1, y: 0, width: -110, height: cellfeedback.frame.height))
+        timeLabel.textAlignment = .right
+        timeLabel.textColor = .gray
+        timeLabel.font = UIFont.systemFont(ofSize: 9)
+        timeLabel.text = time[indexPath.row]
+        
+        // Add the timeLabel as a subview of the cell's contentView
+          cellfeedback.contentView.addSubview(timeLabel)
+        
         return cellfeedback
+    }
+    
+    //----------NEW CODE
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            tableView.beginUpdates()
+            //myFeedback.remove(at: indexPath.row)
+            let myIndex = indexPath.row
+            let myComm = mycomments[myIndex]
+            
+            try? dbQueue?.write{ db in
+                try db.execute(sql: "DELETE from Feedback WHERE Comment = ?", arguments: [myComm])
+             
+            }
+             
+             mycomments.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.endUpdates()
+        }
     }
 
 }
